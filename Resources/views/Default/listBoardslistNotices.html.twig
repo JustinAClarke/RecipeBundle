@@ -1,0 +1,43 @@
+{% extends "NoticeBoardBundle:Default:layout.html.twig" %}
+
+{% block title %}All Recipes list{% endblock %}
+
+{# Debug List notice board Notices with ID, Title and Board. #}
+{% block header %}
+	All Recipes list
+	{% endblock %}
+
+{% block body %}
+	
+
+	{% for Board in Boards %}
+		<div class="board">
+			<div class="col-md-12">
+				<h3><a href="{{ path('showBoard', {'slug': Board.title }) }}">{{ Board.title }}</a></h3>
+			</div>
+			<div class="col-md-12">
+				{{ render(controller( 'NoticeBoardBundle:Default:showNoticeGrid', { 'slug' : Board.title } )) }}
+				{# {{ render(controller( 'NoticeBoardBundle:Default:showNoticeList', { 'slug' : Board.title } )) }} #}
+    		</div>
+		</div>
+
+	{% endfor %}
+	
+{# 	
+	<ul>
+	{% for NoticeBoard in NoticeBoards %}
+	
+		<li id="{{ NoticeBoard.id }}"><a href="{{ path('showBoard', {'slug': NoticeBoard.title}) }}">{{ NoticeBoard.title }}</a></li>
+		<ul>
+			{% for NoticeBoardNotices in Notices %}
+				{% if NoticeBoardNotices.board == NoticeBoard.title%}
+				<li id="{{ NoticeBoardNotices.id }}"><a href="{{ path('showNotice', {'slug': NoticeBoardNotices.id}) }}">{{ NoticeBoardNotices.title }}</a></li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+	
+	
+	{% endfor %}
+	
+	</ul> #}
+{% endblock %}

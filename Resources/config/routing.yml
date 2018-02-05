@@ -1,0 +1,79 @@
+home:
+    path:     /
+    defaults: { _controller: NoticeBoardBundle:Default:index }
+
+listBoards:
+    path:     /listCategories/
+    defaults: { _controller: NoticeBoardBundle:Default:listBoards }
+
+listBoardsNotices:
+    path:     /listCategoriesAndRecipes/
+    defaults: { _controller: NoticeBoardBundle:Default:listBoardsNotices }
+
+showBoard:
+    path:     /showCategory/{slug}
+    defaults: { _controller: NoticeBoardBundle:Default:showBoard }
+
+showNotice:
+    path:     /showRecipe/{slug}
+    defaults: { _controller: NoticeBoardBundle:Default:showNotice }
+
+showNoticeSidebySideSingle:
+    path:     /showSidebySide/{slug1}
+    defaults: { _controller: NoticeBoardBundle:Default:showSidebySideSingle }
+    
+showNoticeSidebySide:
+    path:     /showSidebySide/{slug1}/{slug2}
+    defaults: { _controller: NoticeBoardBundle:Default:showSidebySide }
+    
+editNotice:
+    path:     /editRecipe/{slug}
+    defaults: { _controller: NoticeBoardBundle:Default:editNotice }
+
+addNotice:
+    path:     /addRecipe/
+    defaults: { _controller: NoticeBoardBundle:Default:addNotice }
+
+bloodFoods:
+    path:     /bloodTypeFoods/
+    defaults: { _controller: NoticeBoardBundle:Default:showBloodTypeFoods }
+
+addbloodFoods:
+    path:     /addBloodTypeFoods/
+    defaults: { _controller: NoticeBoardBundle:Default:addBloodTypeFoods }
+
+lynspage:
+    path: /lynspage
+    defaults:  { _controller: NoticeBoardBundle:Default:lynsMessage }
+    
+showAbout:
+    path:     /about/
+    defaults: { _controller: NoticeBoardBundle:Default:showAbout }
+
+search:
+    path:     /search
+    defaults: { _controller: NoticeBoardBundle:Default:search }
+
+viewGrid:
+    path:   /grid/{slug}
+    defaults: { _controller: NoticeBoardBundle:Default:showNoticeGrid }
+
+categoriesnav:
+    path: /categoriesnav
+    defaults: { _controller: NoticeBoardBundle:Default:categoriesNav }
+
+
+# showBoards:
+    # path:     /showCategories/
+    # defaults: { _controller: NoticeBoardBundle:Default:showBoards }
+# 
+# showNotices:
+    # path:     /showRecipes/{slug}
+    # defaults: { _controller: NoticeBoardBundle:Default:showNotices }
+
+
+
+
+create_db:
+    path:     /createdb
+    defaults: { _controller: NoticeBoardBundle:Default:create }

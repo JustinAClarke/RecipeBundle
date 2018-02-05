@@ -1,0 +1,40 @@
+{% extends "NoticeBoardBundle:Default:layout.html.twig" %}
+
+{% if not list %}
+
+	{% set title = "No Recipes"%}
+	{% set header = "No Recipes"%}
+	{% set board = "No Item"%}
+
+{% else %}
+
+	{% set board = list|first.Board %}
+	
+	{% set title = list|first.Board %}
+	{% set header = list|first.Board %}
+	
+	
+	{% block body %}
+
+	{% if board  == "No Item" %}
+		<h3>Consider adding a Recipe <a href="{{ path('addNotice') }}">here</a></h3>
+	{% else %}
+		{{ render(controller(
+    	    'NoticeBoardBundle:Default:showNoticeGrid',
+    	    { 'slug' : board }
+    	)) }}
+    {% endif %}
+	{# TEST DISPLAY Notices in grid
+	<ul>
+	{% for Notice in list %}
+		<li><a href="{{ path('showNotice', {'slug': Notice.id}) }}">{{ Notice.title }}</a></li>
+	{% endfor %}
+	
+	</ul>#}
+	{% endblock %}
+
+
+{% endif %}
+
+{% block title %}{{parent()}} - {{ title}}{% endblock %}
+{% block header %}{{ header }}{% endblock %}

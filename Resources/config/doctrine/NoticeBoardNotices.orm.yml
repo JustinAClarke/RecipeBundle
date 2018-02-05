@@ -1,0 +1,75 @@
+NoticeBoardBundle\Entity\NoticeBoardNotices:
+    type: entity
+    table: null
+    repositoryClass: NoticeBoardBundle\Repository\NoticeBoardNoticesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        board:
+            type: string
+            length: 255
+            column: Board
+        title:
+            type: string
+            length: 255
+            column: Title
+        requirements:
+            type: string
+            length: 2048
+            column: Requirements
+            nullable: true
+        content:
+            type: string
+            length: 2048
+            column: Content
+            nullable: true
+        notes:
+            type: string
+            length: 2048
+            column: Notes
+            nullable: true
+        image:
+            type: string
+            length: 1024
+            column: Image
+            nullable: true
+        servs:
+            type: string
+            length: 255
+            column: Servs
+            nullable: true
+        prep:
+            type: string
+            length: 255
+            column: Prep
+            nullable: true
+        cook:
+            type: string
+            length: 255
+            column: Cook
+            nullable: true
+        dateinit:
+            type: string
+            length: 255
+            column: DateInit
+            nullable: true
+        datemod:
+            type: string
+            length: 255
+            column: DateMod
+            nullable: true
+        userinit:
+            type: string
+            length: 255
+            column: UserInit
+            nullable: true
+        usermod:
+            type: string
+            length: 255
+            column: UserMod
+            nullable: true
+    lifecycleCallbacks: {  }

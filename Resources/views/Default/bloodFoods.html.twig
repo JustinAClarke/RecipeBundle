@@ -1,0 +1,248 @@
+{% extends "NoticeBoardBundle:Default:layout.html.twig" %}
+
+{% block title %}Notice Board Notices Home{% endblock %}
+
+{% block header %}
+Notice Board Notices Home
+{% endblock %}
+
+{% block nav %}
+	{{ parent() }}
+{% endblock %}
+
+
+{% block body %}
+	{# {{ dump() }}  #}
+	<script type="text/javascript">
+	/*var foodSearch  = function(){
+		console.log("Searching Food");
+		var string = $( "#searchFoodString" ).text();
+		console.log("string: " . string );
+		$(tr).hide();
+		$(tr th).show();
+		$(tr:contains( string )).show();
+	}
+	*/
+	var showHide = function(){
+		var showA = $("#showA").val();
+		var showB = $("#showB").val();
+		var showAB = $("#showAB").val();
+		var showO = $("#showO").val();
+		console.log(showA + showB + showAB + showO);
+
+		if (showA = "on") {
+			$("td:nth-child(1)").show();
+			$("th:nth-child(1)").show();
+			console.log("showA");
+		}
+		else
+		{
+			$("td:nth-child(1)").hide();
+			$("th:nth-child(1)").hide();
+			console.log("hideA");
+		}
+		if (showB = "on") {
+			$("td:nth-child(2)").show();
+			$("th:nth-child(2)").show();
+			console.log("showB");
+		}
+		else
+		{
+			$("td:nth-child(2)").hide();		
+			$("th:nth-child(2)").hide();		
+			console.log("hideB");
+		}
+		if (showAB = "on") {
+			$("td:nth-child(3)").show();
+			$("th:nth-child(3)").show();
+			console.log("showAB");
+		}
+		else
+		{
+			$("td:nth-child(3)").hide();	
+			$("th:nth-child(3)").hide();	
+			console.log("hideAB");
+		}
+		if (showO = "on") {
+			$("td:nth-child(4)").show();
+			$("th:nth-child(4)").show();
+			console.log("showO");
+		}
+		else
+		{
+			$("td:nth-child(4)").hide();	
+			$("th:nth-child(4)").hide();	
+			console.log("hideO");
+		}
+	}
+	$(document).ready(function()
+	{
+		$('#searchFoodString').keyup(function()
+		{
+			searchTable($(this).val());
+		});
+	});
+
+	function searchTable(inputVal)
+	{
+		var table = $('table');
+		table.find('tr').each(function(index, row)
+		{
+			var allCells = $(row).find('td');
+			if(allCells.length > 0)
+			{
+				var found = false;
+				allCells.each(function(index, td)
+				{
+					var regExp = new RegExp(inputVal, 'i');
+					if(regExp.test($(td).text()))
+					{
+						found = true;
+						return false;
+					}
+				});
+				if(found == true)$(row).show();else $(row).hide();
+			}
+		});
+	}
+</script>
+<!-- create table for each food category, with headings for the different blood types.
+Search option, to hide all rows that don't contain the typed string. -->
+Search: <input id="searchFoodString" type="text" onchange="foodSearch()" />
+Blood Type A:<input id="showA" type="checkbox" name="A" onchange="showHide()">
+Blood Type B:<input id="showB" type="checkbox" name="B" onchange="showHide()">
+Blood Type AB:<input id="showAB" type="checkbox" name="AB" onchange="showHide()">
+Blood Type O:<input id="showO" type="checkbox" name="O" onchange="showHide()">
+
+
+<!-- Meat & Poultry -->
+<h3>Meat & Poultry</h3>
+<table>
+<tr><th>Food:</th><th>A:</th><th>B:</th><th>AB:</th><th>O:</th></tr>
+{% for row in MeatPoultry %}
+<tr>
+<td>{{ row.food }}</td><td>{{ row.astatus }}</td><td>{{ row.bstatus }}</td><td>{{ row.aBstatus }}</td><td>{{ row.ostatus }}</td>
+</tr>
+{% endfor %}
+</table>
+<!-- Fish & Seafood -->
+<h3>Fish & Seafood</h3>
+<table>
+<tr><th>Food:</th><th>A:</th><th>B:</th><th>AB:</th><th>O:</th></tr>
+{% for row in FishSeafood %}
+<tr>
+<td>{{ row.food }}</td><td>{{ row.astatus }}</td><td>{{ row.bstatus }}</td><td>{{ row.aBstatus }}</td><td>{{ row.ostatus }}</td>
+</tr>
+{% endfor %}
+</table>
+<!-- Dairy & Eggs -->
+<h3>Dairy & Eggs</h3>
+<table>
+<tr><th>Food:</th><th>A:</th><th>B:</th><th>AB:</th><th>O:</th></tr>
+{% for row in DairyEggs %}
+<tr>
+<td>{{ row.food }}</td><td>{{ row.astatus }}</td><td>{{ row.bstatus }}</td><td>{{ row.aBstatus }}</td><td>{{ row.ostatus }}</td>
+</tr>
+{% endfor %}
+</table>
+<!-- Beans & Legumes -->
+<h3>Beans & Legumes</h3>
+<table>
+<tr><th>Food:</th><th>A:</th><th>B:</th><th>AB:</th><th>O:</th></tr>
+{% for row in BeansLegumes %}
+<tr>
+<td>{{ row.food }}</td><td>{{ row.astatus }}</td><td>{{ row.bstatus }}</td><td>{{ row.aBstatus }}</td><td>{{ row.ostatus }}</td>
+</tr>
+{% endfor %}
+</table>
+<!-- Nuts & Seeds -->
+<h3>Nuts & Seeds</h3>
+<table>
+<tr><th>Food:</th><th>A:</th><th>B:</th><th>AB:</th><th>O:</th></tr>
+{% for row in NutsSeeds %}
+<tr>
+<td>{{ row.food }}</td><td>{{ row.astatus }}</td><td>{{ row.bstatus }}</td><td>{{ row.aBstatus }}</td><td>{{ row.ostatus }}</td>
+</tr>
+{% endfor %}
+</table>
+<!-- Grains & Starches -->
+<h3>Grains & Starches</h3>
+<table>
+<tr><th>Food:</th><th>A:</th><th>B:</th><th>AB:</th><th>O:</th></tr>
+{% for row in GrainsStarches %}
+<tr>
+<td>{{ row.food }}</td><td>{{ row.astatus }}</td><td>{{ row.bstatus }}</td><td>{{ row.aBstatus }}</td><td>{{ row.ostatus }}</td>
+</tr>
+{% endfor %}
+</table>
+<!-- Vegetables -->
+<h3>Vegetables</h3>
+<table>
+<tr><th>Food:</th><th>A:</th><th>B:</th><th>AB:</th><th>O:</th></tr>
+{% for row in Vegetables %}
+<tr>
+<td>{{ row.food }}</td><td>{{ row.astatus }}</td><td>{{ row.bstatus }}</td><td>{{ row.aBstatus }}</td><td>{{ row.ostatus }}</td>
+</tr>
+{% endfor %}
+</table>
+<!-- Fruits & Fruit Juices -->
+<h3>Fruits & Fruit Juices</h3>
+<table>
+<tr><th>Food:</th><th>A:</th><th>B:</th><th>AB:</th><th>O:</th></tr>
+{% for row in FruitsJuices %}
+<tr>
+<td>{{ row.food }}</td><td>{{ row.astatus }}</td><td>{{ row.bstatus }}</td><td>{{ row.aBstatus }}</td><td>{{ row.ostatus }}</td>
+</tr>
+{% endfor %}
+</table>
+<!-- Oils -->
+<h3>Oils</h3>
+<table>
+<tr><th>Food:</th><th>A:</th><th>B:</th><th>AB:</th><th>O:</th></tr>
+{% for row in Oils %}
+<tr>
+<td>{{ row.food }}</td><td>{{ row.astatus }}</td><td>{{ row.bstatus }}</td><td>{{ row.aBstatus }}</td><td>{{ row.ostatus }}</td>
+</tr>
+{% endfor %}
+</table>
+<!-- Herbs, Spices & Condiments -->
+<h3>Herbs, Spices & Condiments</h3>
+<table>
+<tr><th>Food:</th><th>A:</th><th>B:</th><th>AB:</th><th>O:</th></tr>
+{% for row in HerbsSpicesCondiments %}
+<tr>
+<td>{{ row.food }}</td><td>{{ row.astatus }}</td><td>{{ row.bstatus }}</td><td>{{ row.aBstatus }}</td><td>{{ row.ostatus }}</td>
+</tr>
+{% endfor %}
+</table>
+<!-- Beverages  -->
+<h3>Beverages </h3>
+<table>
+<tr><th>Food:</th><th>A:</th><th>B:</th><th>AB:</th><th>O:</th></tr>
+{% for row in Beverages %}
+<tr>
+<td>{{ row.food }}</td><td>{{ row.astatus }}</td><td>{{ row.bstatus }}</td><td>{{ row.aBstatus }}</td><td>{{ row.ostatus }}</td>
+</tr>
+{% endfor %}
+</table>
+<style type="text/css">
+	table, tr, th, td {
+		width: 100%;
+	    color: black;
+	    border: 1px solid black;
+	    border-collapse: collapse;
+	    text-align: center;
+	}
+	tr th{
+		/*min-width: 30px;*/
+		/*background-color: #0F0;*/
+	}
+	tr:nth-child(odd){
+    background-color: lightgrey;
+	}
+	tr:nth-child(even){
+	    background-color: white;
+	}
+</style>
+
+{% endblock %}

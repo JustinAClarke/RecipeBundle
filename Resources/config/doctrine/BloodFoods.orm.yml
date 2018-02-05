@@ -1,0 +1,36 @@
+NoticeBoardBundle\Entity\BloodFoods:
+    type: entity
+    table: null
+    repositoryClass: NoticeBoardBundle\Repository\BloodFoodsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        cat:
+            type: string
+            length: 255
+            column: Cat
+        food:
+            type: string
+            length: 255
+            column: Food
+        astatus:
+            type: string
+            length: 255
+            column: Astatus
+        bstatus:
+            type: string
+            length: 255
+            column: Bstatus
+        aBstatus:
+            type: string
+            length: 255
+            column: ABstatus
+        ostatus:
+            type: string
+            length: 255
+            column: Ostatus
+    lifecycleCallbacks: {  }

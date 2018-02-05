@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            
+
+            <trans-unit id="recipe.title">
+                <source>recipe.title</source>
+                <target>Title</target>
+            </trans-unit>
+            <trans-unit id="recipe.ingredients">
+                <source>recipe.ingredients</source>
+                <target>Ingredients</target>
+            </trans-unit>
+            <trans-unit id="recipe.method">
+                <source>recipe.method</source>
+                <target>Method</target>
+            </trans-unit>
+            <trans-unit id="recipe.notes">
+                <source>recipe.notes</source>
+                <target>Notes</target>
+            </trans-unit>
+            <trans-unit id="common.home">
+                <source>common.home</source>
+                <target>Home</target>
+            </trans-unit>
+            <trans-unit id="common.search">
+                <source>common.search</source>
+                <target>Search</target>
+            </trans-unit>
+            <trans-unit id="common.about">
+                <source>common.about</source>
+                <target>About Lyn</target>
+            </trans-unit>
+            <trans-unit id="recipe.category">
+                <source>recipe.category</source>
+                <target>Category</target>
+            </trans-unit>
+            <trans-unit id="recipe.categories">
+                <source>recipe.categories</source>
+                <target>Categories</target>
+            </trans-unit>
+            <trans-unit id="common.allrecipes">
+                <source>common.allrecipes</source>
+                <target>All Recipies</target>
+            </trans-unit>
+            <trans-unit id="common.addrecipe">
+                <source>common.addrecipe</source>
+                <target>Add Recipie</target>
+            </trans-unit>
+            <trans-unit id="common.edit">
+                <source>common.edit</source>
+                <target>Edit</target>
+            </trans-unit>
+            <trans-unit id="common.save">
+                <source>common.save</source>
+                <target>Save</target>
+            </trans-unit>
+
+            <trans-unit id="title.section1">
+                <source>title.section1</source>
+                <target>Ingredients</target>
+            </trans-unit>
+            <trans-unit id="title.section2">
+                <source>title.section2</source>
+                <target>Method</target>
+            </trans-unit>
+            <trans-unit id="title.section3">
+                <source>title.section3</source>
+                <target>Notes</target>
+            </trans-unit>
+            
+
+            
+        </body>
+    </file>
+</xliff>
