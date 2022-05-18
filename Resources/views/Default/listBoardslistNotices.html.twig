@@ -1,4 +1,4 @@
-{% extends "NoticeBoardBundle:Default:layout.html.twig" %}
+{% extends "@NoticeBoardBundle/Default/layout.html.twig" %}
 
 {% block title %}All Recipes list{% endblock %}
 
@@ -16,7 +16,7 @@
 				<h3><a href="{{ path('showBoard', {'slug': Board.title }) }}">{{ Board.title }}</a></h3>
 			</div>
 			<div class="col-md-12">
-				{{ render(controller( 'NoticeBoardBundle:Default:showNoticeGrid', { 'slug' : Board.title } )) }}
+				{{ render(controller( 'App\\NoticeBoardBundle\\Controller\\DefaultController::showNoticeGrid', { 'slug' : Board.title } )) }}
 				{# {{ render(controller( 'NoticeBoardBundle:Default:showNoticeList', { 'slug' : Board.title } )) }} #}
     		</div>
 		</div>

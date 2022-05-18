@@ -1,6 +1,6 @@
 <?php
 
-namespace NoticeBoardBundle\Repository;
+namespace App\NoticeBoardBundle\Repository;
 
 /**
  * NoticeBoardNoticesRepository

@@ -1,7 +1,7 @@
-NoticeBoardBundle\Entity\BloodFoods:
+App\NoticeBoardBundle\Entity\BloodFoods:
     type: entity
     table: null
-    repositoryClass: NoticeBoardBundle\Repository\BloodFoodsRepository
+#    repositoryClass: NoticeBoardBundle\Repository\BloodFoodsRepository
     id:
         id:
             type: integer

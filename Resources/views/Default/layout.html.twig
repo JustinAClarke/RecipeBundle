@@ -61,7 +61,7 @@
                 	{% block nav %}
 			 	<li><a class="page-scroll" href="{{ path('home') }}">{{ 'common.home'|trans }}</a></li>
                 	 	{# <li><a class="" href="{{ path('listBoards') }}">Categories</a></li> #}
-			 	{{ render(controller( 'NoticeBoardBundle:Default:categoriesNav' )) }}
+			 	{{ render(controller( 'App\\NoticeBoardBundle\\Controller\\DefaultController::categoriesNav' )) }}
 			 	<li><a class="page-scroll" href="{{ path('listBoardsNotices') }}">{{ 'common.allrecipes'|trans }}</a></li>
 				<li><a class="page-scroll" href="{{ path('addNotice') }}">{{ 'common.addrecipe'|trans }}</a></li>
 				<li><a class="page-scroll" href="{{ path('lynspage') }}">{{ 'common.about'|trans }}</a></li>
@@ -70,7 +70,7 @@
 				 <a><i class="fa fa-search pull-left" aria-hidden="true" data-toggle="collapse" data-target="#search"></i>
 				{# <button class="pull-left" data-toggle="collapse" data-target="#search">{{ 'common.search'|trans }}</button> #}
 					<div id="search" class="collapse pull-right">
-						{{ include('NoticeBoardBundle:Default:searchSmall.html.twig') }}
+						{{ include('@NoticeBoardBundle/Default/searchSmall.html.twig') }}
 					</div>
 				</a>
 	                	
@@ -174,7 +174,7 @@
     {% endblock %}
 
     <!-- start theme Embed -->
-    {{ render(controller( 'ThemesBundle:Default:footer' )) }}
+{#    {{ render(controller( 'ThemesBundle:Default:footer' )) }}#}
     <!-- end theme Embed -->
 
 </body>

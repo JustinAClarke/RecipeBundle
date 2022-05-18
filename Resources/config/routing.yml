@@ -1,79 +1,79 @@
 home:
     path:     /
-    defaults: { _controller: NoticeBoardBundle:Default:index }
+    controller: App\NoticeBoardBundle\Controller\DefaultController::index
 
 listBoards:
     path:     /listCategories/
-    defaults: { _controller: NoticeBoardBundle:Default:listBoards }
+    controller: App\NoticeBoardBundle\Controller\DefaultController::listBoards
 
 listBoardsNotices:
     path:     /listCategoriesAndRecipes/
-    defaults: { _controller: NoticeBoardBundle:Default:listBoardsNotices }
+    controller: App\NoticeBoardBundle\Controller\DefaultController::listBoardsNotices
 
 showBoard:
     path:     /showCategory/{slug}
-    defaults: { _controller: NoticeBoardBundle:Default:showBoard }
+    controller: App\NoticeBoardBundle\Controller\DefaultController::showBoard
 
 showNotice:
     path:     /showRecipe/{slug}
-    defaults: { _controller: NoticeBoardBundle:Default:showNotice }
+    controller: App\NoticeBoardBundle\Controller\DefaultController::showNotice
 
 showNoticeSidebySideSingle:
     path:     /showSidebySide/{slug1}
-    defaults: { _controller: NoticeBoardBundle:Default:showSidebySideSingle }
+    controller: App\NoticeBoardBundle\Controller\DefaultController::showSidebySideSingle
     
 showNoticeSidebySide:
     path:     /showSidebySide/{slug1}/{slug2}
-    defaults: { _controller: NoticeBoardBundle:Default:showSidebySide }
+    controller: App\NoticeBoardBundle\Controller\DefaultController::showSidebySide
     
 editNotice:
     path:     /editRecipe/{slug}
-    defaults: { _controller: NoticeBoardBundle:Default:editNotice }
+    controller: App\NoticeBoardBundle\Controller\DefaultController::editNotice
 
 addNotice:
     path:     /addRecipe/
-    defaults: { _controller: NoticeBoardBundle:Default:addNotice }
+    controller: App\NoticeBoardBundle\Controller\DefaultController::addNotice
 
 bloodFoods:
     path:     /bloodTypeFoods/
-    defaults: { _controller: NoticeBoardBundle:Default:showBloodTypeFoods }
+    controller: App\NoticeBoardBundle\Controller\DefaultController::showBloodTypeFoods
 
 addbloodFoods:
     path:     /addBloodTypeFoods/
-    defaults: { _controller: NoticeBoardBundle:Default:addBloodTypeFoods }
+    controller: App\NoticeBoardBundle\Controller\DefaultController::addBloodTypeFoods
 
 lynspage:
     path: /lynspage
-    defaults:  { _controller: NoticeBoardBundle:Default:lynsMessage }
+    controller: App\NoticeBoardBundle\Controller\DefaultController::lynsMessage
     
 showAbout:
     path:     /about/
-    defaults: { _controller: NoticeBoardBundle:Default:showAbout }
+    controller: App\NoticeBoardBundle\Controller\DefaultController::showAbout
 
 search:
     path:     /search
-    defaults: { _controller: NoticeBoardBundle:Default:search }
+    controller: App\NoticeBoardBundle\Controller\DefaultController::search
 
 viewGrid:
     path:   /grid/{slug}
-    defaults: { _controller: NoticeBoardBundle:Default:showNoticeGrid }
+    controller: App\NoticeBoardBundle\Controller\DefaultController::showNoticeGrid
 
 categoriesnav:
     path: /categoriesnav
-    defaults: { _controller: NoticeBoardBundle:Default:categoriesNav }
+    controller: App\NoticeBoardBundle\Controller\DefaultController::categoriesNav
 
 
 # showBoards:
     # path:     /showCategories/
-    # defaults: { _controller: NoticeBoardBundle:Default:showBoards }
+    # controller: App\NoticeBoardBundle\Controller\DefaultController::showBoards
 # 
 # showNotices:
     # path:     /showRecipes/{slug}
-    # defaults: { _controller: NoticeBoardBundle:Default:showNotices }
+    # controller: App\NoticeBoardBundle\Controller\DefaultController::showNotices
 
 
 
 
 create_db:
     path:     /createdb
-    defaults: { _controller: NoticeBoardBundle:Default:create }
+    controller: App\NoticeBoardBundle\Controller\DefaultController::create

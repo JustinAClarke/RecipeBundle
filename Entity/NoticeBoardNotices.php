@@ -1,6 +1,6 @@
 <?php
 
-namespace NoticeBoardBundle\Entity;
+namespace App\NoticeBoardBundle\Entity;
 
 /**
  * NoticeBoardNotices
