@@ -241,6 +241,11 @@ class NoticeBoardNotices
     {
         return $this->image;
     }
+
+    public function __toString()
+    {
+        return $this->title;
+    }
 }
 
 

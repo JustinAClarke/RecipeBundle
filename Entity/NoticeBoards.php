@@ -51,4 +51,9 @@ class NoticeBoards
     {
         return $this->title;
     }
+
+    public function __toString()
+    {
+        return $this->title;
+    }
 }

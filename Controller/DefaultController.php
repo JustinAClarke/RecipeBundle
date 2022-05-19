@@ -217,7 +217,7 @@ class DefaultController extends AbstractController
             $newBloodFoods->setOstatus($form['ostatus']->getData());
             $em->persist($newBloodFoods);
             $em->flush();
-        return $this->redirect($this->get('router')->generate('bloodFoods'));
+        return $this->redirect($this->generateUrl('bloodFoods'));
             //return $this->redirectToRoute("showNotice, {'slug:'," . $NoticeID ."}");
         }
         
@@ -254,10 +254,10 @@ class DefaultController extends AbstractController
         $label = array();
         $value = array();
 
-        for ($i=0; $i < sizeof($boards); $i++) { 
-            array_push($value, $boards[$i]['title']);
-            array_push($label, $boards[$i]['title']);
-        }
+//        for ($i=0; $i < sizeof($boards); $i++) {
+//            array_push($value, $boards[$i]['title']);
+//            array_push($label, $boards[$i]['title']);
+//        }
         // array_push($value, "Add New");
         // array_push($label, "Add New");
 
@@ -266,11 +266,21 @@ class DefaultController extends AbstractController
         // ->add('title', TextType::class)
         // ->add('save', SubmitType::class, array('label' => 'Create Board'))
         // ->getForm();
-        $boardsI18n = $this->get('translator')->trans('recipe.categories');
+        $boardsI18n = 'recipe.categories';
 
         $form = $this->createFormBuilder($notice)
         ->add('title', TextType::class)
-        ->add('Board', ChoiceType::class, array('choices' => array($boardsI18n => $Boards)))
+        ->add('Board', ChoiceType::class, array(
+            'choices' => array($boardsI18n => $boards),
+            'choice_value' => 'title',
+            'choice_label' => function(?NoticeBoards $noticeBoard) {
+                return $noticeBoard ? strtoupper($noticeBoard->getTitle()) : '';
+            },
+            // returns the html attributes for each option input (may be radio/checkbox)
+            'choice_attr' => function(?NoticeBoards $noticeBoard) {
+                return $noticeBoard ? ['class' => 'noticeBoard_'.strtolower($noticeBoard->getTitle())] : [];
+            },
+        ))
         ->add('requirements', TextareaType::class, array('required' => false))
         ->add('image', FileType::class, array('required' => false))
         ->add('content', TextareaType::class, array('required' => false))
@@ -356,7 +366,7 @@ class DefaultController extends AbstractController
             $em->flush(); //Commit to Database
             // $NoticeID = $form->getId();
             $NoticeID = $newNotice->getId();
-            return $this->redirect($this->get('router')->generate('showNotice', array('slug'=>$NoticeID)));
+            return $this->redirect($this->generateUrl('showNotice', array('slug'=>$NoticeID)));
             //return $this->redirectToRoute("showNotice, {'slug:'," . $NoticeID ."}");
         }
         
@@ -387,20 +397,20 @@ class DefaultController extends AbstractController
         //$Notice = array('notice'=>$notice);
         // $boardsform = new NoticeBoards();
 		
-		$boards = $this->getAllBoards();
+		$Boards = $this->getAllBoards();
 		
-		$Boards = array();
+//		$Boards = array();
 		$label = array();
 		$value = array();
 
-		for ($i=0; $i < sizeof($boards); $i++) { 
-			array_push($value, $boards[$i]['title']);
-			array_push($label, $boards[$i]['title']);
-		}
+//		for ($i=0; $i < sizeof($boards); $i++) {
+//			array_push($value, $boards[$i]['title']);
+//			array_push($label, $boards[$i]['title']);
+//		}
 		// array_push($value, "Add New");
 		// array_push($label, "Add New");
 
-		$Boards = array_combine($value, $label);
+//		$Boards = array_combine($value, $label);
         // $formBoard = $this->createFormBuilder($boardsform)
         // ->add('title', TextType::class)
         // ->add('save', SubmitType::class, array('label' => 'Create Board'))
@@ -411,7 +421,17 @@ class DefaultController extends AbstractController
         // die;+
 		$form = $this->createFormBuilder($Notice)
 		->add('title', TextType::class)
-		->add('Board', ChoiceType::class, array('choices' => array('Boards' => $Boards)))
+            ->add('Board', ChoiceType::class, array(
+                'choices' => array('Boards' => $Boards),
+                'choice_value' => 'title',
+                'choice_label' => function(?NoticeBoards $noticeBoard) {
+                    return $noticeBoard ? strtoupper($noticeBoard->getTitle()) : '';
+                },
+                // returns the html attributes for each option input (may be radio/checkbox)
+                'choice_attr' => function(?NoticeBoards $noticeBoard) {
+                    return $noticeBoard ? ['class' => 'noticeBoard_'.strtolower($noticeBoard->getTitle())] : [];
+                },
+            ))
 		->add('requirements', TextareaType::class, array('required' => false))
         ->add('image', FileType::class, array('data' => null, 'required' => false))
         // ->add('image', FileType::class, array('data' => $Notice->getImage()))
@@ -497,7 +517,7 @@ class DefaultController extends AbstractController
 			$em->flush(); //Commit to Database
             // $NoticeID = $form->getId();
 			$NoticeID = $Notice->getId();
-            return $this->redirect($this->get('router')->generate('showNotice', array('slug'=>$NoticeID)));
+            return $this->redirect($this->generateUrl('showNotice', array('slug'=>$NoticeID)));
 			//return $this->redirectToRoute("showNotice, {'slug:'," . $NoticeID ."}");
 		}
 		
@@ -577,7 +597,7 @@ class DefaultController extends AbstractController
     public function getAllBoards()
     {
         $Boardrepository = $this->doctrine->getRepository(NoticeBoards::class);
-        $boards          = $Boardrepository->getArrayofBoards();
+        $boards          = $Boardrepository->findAll();
         return $boards;
     }
     //get notices / $board
