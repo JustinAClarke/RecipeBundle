@@ -2,3 +2,6 @@ services:
 #    notice_board.example:
 #        class: NoticeBoardBundle\Example
 #        arguments: ["@service_id", "plain_value", %parameter%]
+App\NoticeBoardBundle\Controller\DefaultController:
+  parameters:
+    public_images: '%kernel.root_dir%/../web/recipe/images'

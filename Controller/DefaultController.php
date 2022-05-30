@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 // -- Will Remove Just temp whilst creating form
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use JustinFuhrmeisterClarke\AnalyticsBundle\Controller\AnalyticsIncludes;
 
@@ -458,13 +459,13 @@ class DefaultController extends AbstractController
 			$em = $this->doctrine->getManager();
 			$newNotice = new NoticeBoardNotices();
 
-            $file = $Notice->getImage();
-            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+            /** @var UploadedFile $file */
+            $file = $form->get('image')->getData();
             if($file != null){
-                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $fileName = md5(uniqid()).'.'.$file->getClientOriginalExtension();
 
-                $recipeImageDir = $this->container->getParameter('kernel.root_dir').'/../web/recipe/images';
-                $file->move($recipeImageDir, $fileName);
+
+                $file->move($this->getParameter('kernel.project_dir') . '/public/recipe/images', $fileName);
             }
             else
             {
