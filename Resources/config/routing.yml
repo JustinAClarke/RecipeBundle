@@ -34,18 +34,6 @@ addNotice:
     path:     /addRecipe/
     controller: App\NoticeBoardBundle\Controller\DefaultController::addNotice
 
-bloodFoods:
-    path:     /bloodTypeFoods/
-    controller: App\NoticeBoardBundle\Controller\DefaultController::showBloodTypeFoods
-
-addbloodFoods:
-    path:     /addBloodTypeFoods/
-    controller: App\NoticeBoardBundle\Controller\DefaultController::addBloodTypeFoods
-
-lynspage:
-    path: /lynspage
-    controller: App\NoticeBoardBundle\Controller\DefaultController::lynsMessage
-    
 showAbout:
     path:     /about/
     controller: App\NoticeBoardBundle\Controller\DefaultController::showAbout
@@ -61,18 +49,6 @@ viewGrid:
 categoriesnav:
     path: /categoriesnav
     controller: App\NoticeBoardBundle\Controller\DefaultController::categoriesNav
-
-
-# showBoards:
-    # path:     /showCategories/
-    # controller: App\NoticeBoardBundle\Controller\DefaultController::showBoards
-# 
-# showNotices:
-    # path:     /showRecipes/{slug}
-    # controller: App\NoticeBoardBundle\Controller\DefaultController::showNotices
-
-
-
 
 create_db:
     path:     /createdb
