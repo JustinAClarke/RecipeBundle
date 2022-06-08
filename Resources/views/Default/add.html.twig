@@ -1,154 +1,91 @@
 {% extends "@NoticeBoardBundle/Default/layout.html.twig" %}
 
-{% block title %}{{parent()}} - {{ 'common.addrecipe'|trans }}{% endblock %}
-
-{# Debug List notice boards with ID and Title. #}
+{% block title %}{{ parent() }} - {{ 'common.addrecipe'|trans }}{% endblock %}
 
 {% block header %}
-{{ 'common.addrecipe'|trans }}
+    {{ 'common.addrecipe'|trans }}
 {% endblock %}
 
 
 {% block nav %}
-	{{ parent() }}
-			{#}
-	{% for NoticeBoard in NoticeBoards %}
-		<a id="{{ NoticeBoard.id }}" class="list-group-item active text-center" href="/notice/showNotices/{{ NoticeBoard.title }}">{{ NoticeBoard.title }}</a>
-	{% endfor %}
-	#}
+    {{ parent() }}
 {% endblock %}
 
 {% block body %}
 
-<div class="col-md-12">
+    <div class="col-md-12">
 
-<div class="form">
-	<div class="col-md-12">
-		<div class="col-md-12">
-{{ form_start(form) }}
-	{{ form_errors(form) }}
-<div class="Title">
-	{{ 'recipe.title'|trans }}:&nbsp; {{ form_widget(form.title) }}
-</div>
-<div class="Board">
-	{{ 'recipe.category'|trans }}:&nbsp; {{ form_widget(form.Board) }}
-	
-</div>
-</div>
-</div>
-<div class="col-md-12">
-	<div class="col-md-6">
-		{{ 'recipe.ingredients'|trans }}: {{ form_widget(form.requirements) }}
-	</div>
-	<div class="col-md-6">
-		<div class="image">
-			{% if image == true %}
-							{# <img src="/images/{{ id }}.jpg"> #}
-					<img class="recipe-image col-md-6" width="500" height="500" style="max-width: 100%;
+        <div class="form">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                    <div class="Title">
+                        {{ 'recipe.title'|trans }}:&nbsp; {{ form_widget(form.title) }}
+                    </div>
+                    <div class="Board">
+                        {{ 'recipe.category'|trans }}:&nbsp; {{ form_widget(form.Board) }}
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    {{ 'recipe.ingredients'|trans }}: {{ form_widget(form.requirements) }}
+                </div>
+                <div class="col-md-6">
+                    <div class="image">
+                        {% if image == true %}
+                            {# <img src="/images/{{ id }}.jpg"> #}
+                            <img class="recipe-image col-md-6" width="500" height="500" style="max-width: 100%;
     height: auto;" src="{{ asset('recipe/images/' ~ image) }}">
-				{% endif %}
-		{{ form_row(form.image, { 'attr': {'accept': 'image/*'} }) }}
-		</div>
-	</div>
-</div>
-<div class="col-md-12">
-<div class="col-md-12">
-<div class="{{ 'title.section2'|trans }}">
-	{{ 'recipe.method'|trans }}:  {{ form_widget(form.content) }}
-</div>
+                        {% endif %}
+                        {{ form_row(form.image, { 'attr': {'accept': 'image/*'} }) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <div class="{{ 'title.section2'|trans }}">
+                        {{ 'recipe.method'|trans }}: {{ form_widget(form.content) }}
+                    </div>
 
-<div class="{{ 'title.section3'|trans }}">
-	{{ 'recipe.notes'|trans }}:  {{ form_widget(form.notes) }}
-</div>
+                    <div class="{{ 'title.section3'|trans }}">
+                        {{ 'recipe.notes'|trans }}: {{ form_widget(form.notes) }}
+                    </div>
 
-<div class="save">
-	{{ form_row(form.save, { 'label': "{{ 'common.save'|trans }}" }) }}
-</div>
+                    <div class="save">
+                        {{ form_row(form.save, { 'label': "{{ 'common.save'|trans }}" }) }}
+                    </div>
 
-{{ form_end(form) }}
+                    {{ form_end(form) }}
 
-</div>
-</div>
-</div>
-</div>
-{#
-{{ form_start(form) }}
-{{ form_widget(form) }}
-{{ form_end(form) }}
-#}
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-{#<form action="">
-	Notice Board:
-	<select class="form-control" name="board">
-		{% for NoticeBoard in NoticeBoards %}
-			<option id="{{ NoticeBoard.id }}" value="{{ NoticeBoard.title }}">{{ NoticeBoard.title }}</option>
-		{% endfor %}
-	</select>
-<br />Ingredients:<br />
-	<textarea id="requirements" name="requirements">
-		
-	</textarea>
-<br />Method:<br />
-	<textarea id="content" name="content">
-		
-	</textarea>
-<br />Additional Notes:<br />
-	<textarea id="notes" name="notes">
-		
-	</textarea>
-<br /><br />
-	<input type="submit" value="Save">
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    <script>
 
-</form>#}
+        ClassicEditor
+            .create(document.querySelector('textarea'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <style type="text/css">
+        #addBoard {
+            /*display: none;*/
+        }
 
-<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
-  <script>
-//   $(function() {
-//   $("textarea").attr("required", false);
-//   $("#form_image").attr("required", false);
-//   $("#form_image").attr("accept", "image/*");
-// });
-//   $("#form_Board").change(function(){
-//     console.log("Board Select Changed");	
-//     if( $("#form_Board").val() == "Add New"){
-//       $("#addBoard").show();
-
-//       console.log("Add new Board");	
-//   }
-//   else{
-// 	$("#addBoard").hide();  	
-//   }
-// });
-  // $("#BoardAddButton").click(function(){
-  // 	if( $("#BoardAddValue").val() != "" ){
-  // 		console.log("Add Button Clicked");
-  // 		console.log( $("#BoardAddValue").val() );
-  // 		$("#form_Board").append("<option value=\"" + $("#BoardAddValue").val() + "\">" + $("#BoardAddValue").val() + "</option>");
-  // 		$("#form_Board").val($("#BoardAddValue").val());
-  // 		$("#addBoard").hide();
-  // 		$("#form_Board").find('[value="Add New"]').remove();	
-  // 	}
-  	
-
-  // });
-
-ClassicEditor
-		.create( document.querySelector( 'textarea' ) )
-		.then( editor => {
-			console.log( editor );
-		} )
-		.catch( error => {
-			console.error( error );
-		} );
-  </script>
-<style type="text/css">
-	#addBoard{
-		/*display: none;*/
-	}
-	textarea{
-		required: false;
-	}
-</style>
+        textarea {
+            required: false;
+        }
+    </style>
 
 {% endblock %}

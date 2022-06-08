@@ -2,15 +2,7 @@
 	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'recipe.categories'|trans }} <span class="caret"></span></a>
 	<ul class="dropdown-menu">
 		{% for board in boards %}
-    	{#{ dump(row) }#}
   			<li><a id="{{ board.id }}" class="page-scroll" href="{{ path('showBoard', {'slug': board.title}) }}">{{ board.title }}</a></li>
     	{% endfor %}
-
-  {# <li><a href="#">Another action</a></li> #}
-  {# <li><a href="#">Something else here</a></li> #}
-  {# <li role="separator" class="divider"></li> #}
-  {# <li><a href="#">Separated link</a></li> #}
-  {# <li role="separator" class="divider"></li> #}
-  {# <li><a href="#">One more separated link</a></li> #}
 	</ul>
 </li>
