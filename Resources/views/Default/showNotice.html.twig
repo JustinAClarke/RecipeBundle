@@ -9,69 +9,63 @@
 {% set image = Notice|first.image %}
 
 
-{% block title %}{{parent()}} - {{ title}}{% endblock %}
+{% block title %}{{ parent() }} - {{ title }}{% endblock %}
 
 {% block header %}
-	{{title}}
+    {{ title }}
 {% endblock %}
 
 {% block nav %}
-	{{ parent() }}
-	
-	{# <a class="list-group-item" href="{{ path('showBoard', {'slug': board}) }}">{{board}}</a> #}
-	{#<a class="list-group-item" href="/notice/showBoard/{{board}}">{{board}}</a>#}
-	
+    {{ parent() }}
 {% endblock %}
 
-
-
 {% block body %}
-	<!-- edit button -->
-	<div class="pull-right">
-		<a href="{{ path('editNotice', {'slug': id}) }}">Edit</a>
-		<br>
-		<a href="{{ path('showNoticeSidebySideSingle', {'slug1': id}) }}">Show Side by Side </a>
-	</div>
-	<!-- end edit button -->
+    <!-- edit button -->
+    <div class="pull-right">
+        <a href="{{ path('editNotice', {'slug': id}) }}">Edit</a>
+        <br>
+        <a href="{{ path('showNoticeSidebySideSingle', {'slug1': id}) }}">Show Side by Side </a>
+    </div>
+    <!-- end edit button -->
 
-	
-	<div class="col-md-12">
-		<div class="col-md-6">
-			<div id="{{ 'title.section1'|trans }}" class="section">
-				{% block section1 %}
-					<h3>{{ 'title.section1'|trans }}</h3>
-					<div class="two-col">
-						{{ requirements|raw('html') }}
-					</div>
-				{% endblock %}
-			</div>
-		</div>
-			<div class="col-md-6">
-				{% if image == true %}
-					{# <img src="/images/{{ id }}.jpg"> #}
-					<img class="recipe-image col-md-6" width="500" height="500" style="max-width: 100%;
+
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <div id="{{ 'title.section1'|trans }}" class="section">
+                {% block section1 %}
+                    <h3>{{ 'title.section1'|trans }}</h3>
+                    <div class="two-col">
+                        {{ requirements|raw('html') }}
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            {% if image == true %}
+                {# <img src="/images/{{ id }}.jpg"> #}
+                <img class="recipe-image col-md-6" width="500" height="500" style="max-width: 100%;
     height: auto;" src="{{ asset('recipe/images/' ~ image) }}">
-				{% endif %}
-			</div>
-	</div>
-	<div class="col-md-12">
-	<div class="col-md-12">
-		<div id="{{ 'title.section2'|trans }}" class="section">
-			{% block section2 %}
-				<h3>{{ 'title.section2'|trans }}</h3>
-				{{ content|raw('html') }}
-			{% endblock %}
-		</div>
-		<div id="{{ 'title.section3'|trans }}" class="section">
-			{% block section3 %}
-				{% if notes %}
-				<h3>{{ 'title.section3'|trans }}</h3>
-				{{ notes|raw('html') }}
-			{% endif %}
-			{% endblock %}
-		</div>
-	</div>
-	</div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div id="{{ 'title.section2'|trans }}" class="section">
+                {% block section2 %}
+                    <h3>{{ 'title.section2'|trans }}</h3>
+                    {{ content|raw('html') }}
+                {% endblock %}
+            </div>
+            <div id="{{ 'title.section3'|trans }}" class="section">
+                {% block section3 %}
+                    {% if notes %}
+                        <h3>{{ 'title.section3'|trans }}</h3>
+                        {{ notes|raw('html') }}
+                    {% endif %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 

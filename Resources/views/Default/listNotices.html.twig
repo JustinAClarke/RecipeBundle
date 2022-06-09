@@ -1,22 +1,18 @@
 {% extends "@NoticeBoardBundle/Default/layout.html.twig" %}
 
 {% block title %}List Notice Board Notices TEST{% endblock %}
-
-{# Debug List notice board Notices with ID, Title and Board. #}
-
 {% block nav %}
-	{{ parent() }}
-			
-	{% for NoticeBoardNotices in Notices %}
-		<a id="{{ NoticeBoardNotices.id }}" class="list-group-item active text-center" href="/notice/showNotice/{{ NoticeBoardNotices.title }}">{{ NoticeBoardNotices.title }} <b>{{ NoticeBoardNotices.board }} </b></a>
-	{% endfor %}
+    {{ parent() }}
+    {% for NoticeBoardNotices in Notices %}
+        <a id="{{ NoticeBoardNotices.id }}" class="list-group-item active text-center"
+           href="/notice/showNotice/{{ NoticeBoardNotices.title }}">{{ NoticeBoardNotices.title }}
+            <b>{{ NoticeBoardNotices.board }} </b></a>
+    {% endfor %}
 {% endblock %}
 
 
 {% block body %}
-<h3>List Notice Board Notice Test</h3>
-<ul>
-
-
-</ul>
+    <h3>List Notice Board Notice Test</h3>
+    <ul>
+    </ul>
 {% endblock %}

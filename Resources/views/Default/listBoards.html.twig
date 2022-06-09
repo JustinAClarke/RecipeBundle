@@ -2,25 +2,20 @@
 
 {% block title %}List Notice Boards TEST{% endblock %}
 
-{# Debug List notice boards with ID and Title. #}
-
-
 {% block nav %}
-	{{ parent() }}
-			
-	
+    {{ parent() }}
 {% endblock %}
 
 {% block body %}
-<div class="boards">
-	<ul class="text-center">
-		<li class="list-group-item active text-center">Reciepy Categories</li>
+    <div class="boards">
+        <ul class="text-center">
+            <li class="list-group-item active text-center">Reciepy Categories</li>
 
-		{% for NoticeBoard in NoticeBoards %}
-		<li  class="list-group-item"><a id="{{ NoticeBoard.id }}" href="{{ path('showBoard', {'slug': NoticeBoard.title}) }}">{{ NoticeBoard.title }}</a></li>
-	{% endfor %}
-</ul>
-</div>
-
-
+            {% for NoticeBoard in NoticeBoards %}
+                <li class="list-group-item">
+                    <a id="{{ NoticeBoard.id }}" href="{{ path('showBoard', {'slug': NoticeBoard.title}) }}">{{ NoticeBoard.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

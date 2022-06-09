@@ -1,75 +1,73 @@
 {% extends "@NoticeBoardBundle/Default/layout.html.twig" %}
 {% block title %}
-	{{ 'common.search'|trans }}
+    {{ 'common.search'|trans }}
 {% endblock %}
 
 {% block header %}
-	{{ 'common.search'|trans }}
+    {{ 'common.search'|trans }}
 {% endblock %}
 
-
 {% block body %}
-	{{ 'common.search'|trans }}
+    {{ 'common.search'|trans }}
 
-	<form action="{{ path('search') }}" method="get">
-		<table>
-			<tr>
-				<td>
-					{% if search['q'] is defined %}
-
-						<input name="q" type="text" value="{{ search['q'] }}"></input>
-					{% else %}
-						<input name="q" type="text" value=""></input>
-					{% endif %}
-				</td>
-			</tr>
-			<tr>
-				<td>
-					{% if search['title'] is defined %}
-						<input type="checkbox" name="title" checked="true">{{ 'recipe.title'|trans }}</input>
-					{% else %}
-						{% if search['q'] is defined %}
-							   <input type="checkbox" name="title">{{ 'recipe.title'|trans }}</input>
-						{% else %}
-							  <input type="checkbox" name="title" checked="true">{{ 'recipe.title'|trans }}</input>
-						{% endif %}
-					{% endif %}
-					
-				</td>
-				<td>
-					{% if search['method'] is defined %}
-						<input type="checkbox" name="method" checked="true">{{ 'recipe.method'|trans }}</input>
-					{% else %}
-						<input type="checkbox" name="method">{{ 'recipe.method'|trans }}</input>
-					{% endif %}
-				</td>
-			</tr>
-			<tr>
-				<td>
-					{% if search['requirements'] is defined %}
-						<input type="checkbox" name="requirements" checked="true">{{ 'recipe.ingredients'|trans }}</input>
-					{% else %}
-						<input type="checkbox" name="requirements">{{ 'recipe.ingredients'|trans }}</input>
-					{% endif %}
-				</td>
-				<td>
-					{% if search['notes'] is defined %}
-						<input type="checkbox" name="notes" checked="true">Notes</input>
-					{% else %}
-					<input type="checkbox" name="notes">Notes</input>
-					{% endif %}
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="submit" value="{{ 'common.search'|trans }}"></input>
-				</td>
-			</tr>
-		</table>
-	</form>
-	{% if not notice %}
-	{% else %}
-		{{ include('NoticeBoardBundle:Default:noticeListView.html.twig') }}
-	{% endif %}
+    <form action="{{ path('search') }}" method="get">
+        <table>
+            <tr>
+                <td>
+                    {% if search['q'] is defined %}
+                        <input name="q" type="text" value="{{ search['q'] }}"></input>
+                    {% else %}
+                        <input name="q" type="text" value=""></input>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {% if search['title'] is defined %}
+                        <input type="checkbox" name="title" checked="true">{{ 'recipe.title'|trans }}</input>
+                    {% else %}
+                        {% if search['q'] is defined %}
+                            <input type="checkbox" name="title">{{ 'recipe.title'|trans }}</input>
+                        {% else %}
+                            <input type="checkbox" name="title" checked="true">{{ 'recipe.title'|trans }}</input>
+                        {% endif %}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if search['method'] is defined %}
+                        <input type="checkbox" name="method" checked="true">{{ 'recipe.method'|trans }}</input>
+                    {% else %}
+                        <input type="checkbox" name="method">{{ 'recipe.method'|trans }}</input>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {% if search['requirements'] is defined %}
+                        <input type="checkbox" name="requirements"
+                               checked="true">{{ 'recipe.ingredients'|trans }}</input>
+                    {% else %}
+                        <input type="checkbox" name="requirements">{{ 'recipe.ingredients'|trans }}</input>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if search['notes'] is defined %}
+                        <input type="checkbox" name="notes" checked="true">Notes</input>
+                    {% else %}
+                        <input type="checkbox" name="notes">Notes</input>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="{{ 'common.search'|trans }}"></input>
+                </td>
+            </tr>
+        </table>
+    </form>
+    {% if not notice %}
+    {% else %}
+        {{ include('NoticeBoardBundle:Default:noticeListView.html.twig') }}
+    {% endif %}
 
 {% endblock %}

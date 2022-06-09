@@ -2,12 +2,10 @@
 
 {% block title %}Response test{% endblock %}
 
-
 {% block body %}
-<ul>
-{% for NoticeBoard in NoticeBoards %}
-	<li id="{{ NoticeBoard.id }}">{{ NoticeBoard.title }}</li>
-{% endfor %}
-
-</ul>
+    <ul>
+        {% for NoticeBoard in NoticeBoards %}
+            <li id="{{ NoticeBoard.id }}">{{ NoticeBoard.title }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}
