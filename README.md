@@ -1,32 +1,44 @@
-# NoticeBoardsBundle (RecipeBundle) (ARCIVED)
+# NoticeBoardsBundle (RecipeBundle)
 
-Created by Justin Fuhrmeister-Clarke
+Created by Justin Clarke
 Date 09-02-2016
 
-## ARCHIVE
 This is being re-written in Python and Django, to both learn a new language and system, and for fun.
-[Django-Recieps](https://github.com/JustinFuhrmeister-Clarke/django_recipes)
+[Django-Recieps](https://github.com/JustinAClarke/django_recipes)
 
 ### Instaling
 
-This requires Symfony 3.x (though it may work with symfony 4.x, I havent tested it)
+This requires Symfony 6.x
 
  * Install Symfony and create a base 'project'
  * Clone this repo into /src/ as NoticeBoardBundle `/src/NoticeBoardBundle`
  * Place the below into the config files:
  
  ```
- config/routing.yml
+ config/routes.yaml
     ...
-notice_board:
-    resource: "@NoticeBoardBundle/Resources/config/routing.yml"
-    prefix:   /
+controllers:
+    resource: ../src/NoticeBoardBundle/Resources/config/routing.yml
+    type: yaml
     ...
 
-AppKernel.php
+config/bundles.php
     ...
-        new NoticeBoardBundle\NoticeBoardBundle(),
+    use App\NoticeBoardBundle as NoticeBoardBundle;
+return [
+    NoticeBoardBundle\NoticeBoardBundle::class => ['all' => true],
+];
     ...
+ ```
+ install composer requires:
+ ```
+ require symfony/twig-bundle
+    symfony composer require symfony/asset
+    symfony local:check:requirements
+    symfony local:check:requirements
+    symfony local:check:requirements
+    symfony composer require symfony/form
+    symfony composer require symfony/translation
 
  ```
  * Update the database with the schema from this bundle
@@ -44,6 +56,6 @@ AppKernel.php
  
  
 ### ISSUES
-If there are issues, please submit them to the [issue tracker](https://github.com/JustinFuhrmeister-Clarke/RecipeBundle/issues)
+If there are issues, please submit them to the [issue tracker](https://github.com/JustinAClarke/RecipeBundle/issues)
 and I will take a look and either fix it in this, or move it to the django project and fix it in there.
 
