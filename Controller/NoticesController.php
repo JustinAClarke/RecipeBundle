@@ -1,9 +1,9 @@
 <?php
 
-namespace Notices;
+namespace App\NoticeBoardBundle\Controller;
 
-use NoticeBoardBundle\Entity\NoticeBoardNotices;
-use NoticeBoardBundle\Entity\NoticeBoards;
+use App\NoticeBoardBundle\Entity\NoticeBoardNotices;
+use App\NoticeBoardBundle\Entity\NoticeBoards;
 use Symfony\Component\BrowserKit\Response;	
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

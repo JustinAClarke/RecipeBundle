@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-{#{ render(controller( 'AnalyticsBundle:Default:add' )) }#}
-{# {{ render(controller( 'JustinFuhrmeisterClarke:AnalyticsBundle:Controller:AnalyticsBundle:index')) }} #}
-{# {{JustinFuhrmeisterClarke:AnalyticsBundle:AnalyticsBundle}} #}
-{#{{ render(controller( 'AnalyticsBundle:Default:add' )) }}#}
 <head>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="JustinFuhrmeisterClarke">
+    <meta name="author" content="JustinAClarke">
 
-    <title>{% block title %}Lyns Gluten Free Kitchen{% endblock %}</title>
+    <title>{% block title %}Recipe Bundle{% endblock %}</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{{ asset('bundles/noticeboard/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -61,16 +57,15 @@
                 	{% block nav %}
 			 	<li><a class="page-scroll" href="{{ path('home') }}">{{ 'common.home'|trans }}</a></li>
                 	 	{# <li><a class="" href="{{ path('listBoards') }}">Categories</a></li> #}
-			 	{{ render(controller( 'NoticeBoardBundle:Default:categoriesNav' )) }}
+			 	{{ render(controller( 'App\\NoticeBoardBundle\\Controller\\DefaultController::categoriesNav' )) }}
 			 	<li><a class="page-scroll" href="{{ path('listBoardsNotices') }}">{{ 'common.allrecipes'|trans }}</a></li>
 				<li><a class="page-scroll" href="{{ path('addNotice') }}">{{ 'common.addrecipe'|trans }}</a></li>
-				<li><a class="page-scroll" href="{{ path('lynspage') }}">{{ 'common.about'|trans }}</a></li>
 	                {% endblock %}
 	                <li class="search">
 				 <a><i class="fa fa-search pull-left" aria-hidden="true" data-toggle="collapse" data-target="#search"></i>
 				{# <button class="pull-left" data-toggle="collapse" data-target="#search">{{ 'common.search'|trans }}</button> #}
 					<div id="search" class="collapse pull-right">
-						{{ include('NoticeBoardBundle:Default:searchSmall.html.twig') }}
+						{{ include('@NoticeBoardBundle/Default/searchSmall.html.twig') }}
 					</div>
 				</a>
 	                	
@@ -122,33 +117,6 @@
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    {# <span class="copyright">Copyright &copy; Your Website 2014</span> #}
-                </div>
-                <div class="col-md-4">
-                    <ul class="list-inline social-buttons">
-                        {# <li><a href="#"><i class="fa fa-twitter"></i></a> #}
-                        {# </li> #}
-                        {# <li><a href="#"><i class="fa fa-facebook"></i></a> #}
-                        {# </li> #}
-                        {# <li><a href="#"><i class="fa fa-linkedin"></i></a> #}
-                        {# </li> #}
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <ul class="list-inline quicklinks">
-                        {# <li><a href="#">Privacy Policy</a> #}
-                        {# </li> #}
-                        {# <li><a href="#">Terms of Use</a> #}
-                        {# </li> #}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <!-- jQuery -->
      <script src="{{ asset('bundles/noticeboard/js/jquery.js') }}"></script>
@@ -172,10 +140,6 @@
     
     {% block endscripts %}
     {% endblock %}
-
-    <!-- start theme Embed -->
-    {{ render(controller( 'ThemesBundle:Default:footer' )) }}
-    <!-- end theme Embed -->
 
 </body>
 

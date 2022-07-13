@@ -1,6 +1,6 @@
 <?php
 
-namespace NoticeBoardBundle\Entity;
+namespace App\NoticeBoardBundle\Entity;
 
 /**
  * NoticeBoardNotices
@@ -240,6 +240,11 @@ class NoticeBoardNotices
     public function getImage()
     {
         return $this->image;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
     }
 }
 

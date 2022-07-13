@@ -1,7 +1,7 @@
-NoticeBoardBundle\Entity\NoticeBoardNotices:
+App\NoticeBoardBundle\Entity\NoticeBoardNotices:
     type: entity
     table: null
-    repositoryClass: NoticeBoardBundle\Repository\NoticeBoardNoticesRepository
+#    repositoryClass: NoticeBoardBundle\Repository\NoticeBoardNoticesRepository
     id:
         id:
             type: integer

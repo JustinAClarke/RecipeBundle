@@ -1,6 +1,6 @@
 <?php
 
-namespace NoticeBoardBundle\Entity;
+namespace App\NoticeBoardBundle\Entity;
 
 /**
  * NoticeBoards
@@ -48,6 +48,11 @@ class NoticeBoards
      * @return string
      */
     public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function __toString()
     {
         return $this->title;
     }

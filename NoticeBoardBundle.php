@@ -1,9 +1,9 @@
 <?php
 
-namespace NoticeBoardBundle;
+namespace App\NoticeBoardBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use JustinFuhrmeisterClarke\AnalyticsBundle\Controller\AnalyticsIncludes;
+//use JustinFuhrmeisterClarke\AnalyticsBundle\Controller\AnalyticsIncludes;
 
 class NoticeBoardBundle extends Bundle
 {

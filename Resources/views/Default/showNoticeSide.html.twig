@@ -1,90 +1,83 @@
-{% extends "NoticeBoardBundle:Default:layout.html.twig" %}
+{% extends "@NoticeBoardBundle/Default/layout.html.twig" %}
 
 {% set title = "Side by Side" %}
 
-
-{% block title %}{{parent()}} - {{ title}}{% endblock %}
+{% block title %}{{ parent() }} - {{ title }}{% endblock %}
 
 {% block header %}
-	{{title}}
+    {{ title }}
 {% endblock %}
 
 {% block nav %}
-	{{ parent() }}
-	
-	{# <a class="list-group-item" href="{{ path('showBoard', {'slug': board}) }}">{{board}}</a> #}
-	{#<a class="list-group-item" href="/notice/showBoard/{{board}}">{{board}}</a>#}
-	
+    {{ parent() }}
 {% endblock %}
 
 
-{%block body %}
-<div class="col-md-12">
+{% block body %}
+    <div class="col-md-12">
 
-<div class="col-md-6">
-<div class="select">
-<select name="first">
-{% for recipe in all %}
-  {% if recipe.id == view1 %}
-    <option value={{ recipe.id }} selected="on">{{ recipe.title }}</option>
-  {% else %}
-    <option value={{ recipe.id }}>{{ recipe.title }}</option>
-  {% endif %}
-{% endfor %}
-</select>
-<input type=submit value=Go >
-</div>
+        <div class="col-md-6">
+            <div class="select">
+                <select name="first">
+                    {% for recipe in all %}
+                        {% if recipe.id == view1 %}
+                            <option value={{ recipe.id }} selected="on">{{ recipe.title }}</option>
+                        {% else %}
+                            <option value={{ recipe.id }}>{{ recipe.title }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <input type=submit value=Go>
+            </div>
 
-{#%include 'showNoticeCommon.html.twig' with 'Notice':first only %#}
-{{ render(controller(
-    	    'NoticeBoardBundle:Default:showNoticeCommon',
-    	    { 'slug' : view1 ,
-    	    'showtitle':true,
-    	    'showimage':false}
-    	)) }}
-    	</div>
-<div class="col-md-6">
-<div class="select">
-<select name="second">
-{% for recipe in all %}
-  {% if recipe.id == view2 %}
-    <option value={{ recipe.id }} selected="on">{{ recipe.title }}</option>
-  {% else %}
-    <option value={{ recipe.id }}>{{ recipe.title }}</option>
-  {% endif %}{% endfor %}
-</select>
-<input type=submit value=Go >
-</div>
+            {{ render(controller(
+                'NoticeBoardBundle:Default:showNoticeCommon',
+                { 'slug' : view1 ,
+                    'showtitle':true,
+                    'showimage':false}
+            )) }}
+        </div>
+        <div class="col-md-6">
+            <div class="select">
+                <select name="second">
+                    {% for recipe in all %}
+                        {% if recipe.id == view2 %}
+                            <option value={{ recipe.id }} selected="on">{{ recipe.title }}</option>
+                        {% else %}
+                            <option value={{ recipe.id }}>{{ recipe.title }}</option>
+                        {% endif %}{% endfor %}
+                </select>
+                <input type=submit value=Go>
+            </div>
 
-{% if view2 == false %}
-{% else %}
-{{ render(controller(
-    	    'NoticeBoardBundle:Default:showNoticeCommon',
-    	    { 'slug' : view2 ,
-    	    'showtitle':true,
-    	    'showimage':false}
-    	)) }}
-{#%include 'showNoticeCommon.html.twig' with 'Notice':second only %#}
-{% endif %}
-</div>
-</div>
+            {% if view2 == false %}
+            {% else %}
+                {{ render(controller(
+                    'NoticeBoardBundle:Default:showNoticeCommon',
+                    { 'slug' : view2 ,
+                        'showtitle':true,
+                        'showimage':false}
+                )) }}
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
 
 {% block endscripts %}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-<script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script>
 
-$(document).ready(function(){
-$('select').select2();
-})
+        $(document).ready(function () {
+            $('select').select2();
+        })
 
-$("input[value='Go']").click(function(){
-var first,second,url;
-first=$("select[name='first']").val();
-	second=$("select[name='second']").val()
-	
-url = "/showSidebySide/"+first+"/"+second;
-window.location=url;
-});</script>
+        $("input[value='Go']").click(function () {
+            var first, second, url;
+            first = $("select[name='first']").val();
+            second = $("select[name='second']").val()
+
+            url = "/showSidebySide/" + first + "/" + second;
+            window.location = url;
+        });</script>
 {% endblock %}

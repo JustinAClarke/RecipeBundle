@@ -1,34 +1,27 @@
 {# Display Notices in grid arangement, 3 accross, and any number down #}
-
-
 <div class="">
-{#{ dump(notice) }#}
     {% for row in notice %}
-    <div class="">
-    {#{ dump(row) }#}
-        
-                <div class="cell">
-                    {% set title = row.title %}
-                    {% set requirements = row.requirements %}
-                    {% set id = row.id %}
-                    {% set image = row.image %}
-                    <a href="{{ path('showNotice', {'slug': id}) }}"><h5>{{ title }}</h5></a>
-                    {% if image == true %}
-                    {# <img src="/images/{{ id }}.jpg"> #}
+        <div class="">
+            <div class="cell">
+                {% set title = row.title %}
+                {% set requirements = row.requirements %}
+                {% set id = row.id %}
+                {% set image = row.image %}
+                <a href="{{ path('showNotice', {'slug': id}) }}"><h5>{{ title }}</h5></a>
+                {% if image == true %}
                     <a href="{{ path('showNotice', {'slug': id}) }}" class="col-md-6">
-                        <img class="recipe-image" width="100" height="100" style="width: auto; max-height: 100%;" src="{{ asset('recipe/images/' ~ image) }}">
+                        <img class="recipe-image" width="100" height="100" style="width: auto; max-height: 100%;"
+                             src="{{ asset('recipe/images/' ~ image) }}">
                     </a>
-                        <div class="col-md-6">
+                    <div class="col-md-6">
                         {{ requirements|raw }}
-                        </div>
-                    {% else %}
+                    </div>
+                {% else %}
                     <div class="two-col">
                         {{ requirements|raw }}
                     </div>
-                    {% endif %}
-                </div>
-        
-    
-    </div>
+                {% endif %}
+            </div>
+        </div>
     {% endfor %}
 </div>

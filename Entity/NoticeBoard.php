@@ -1,4 +1,5 @@
-namespace NoticeBoardBundle/\Entity;
+<?php
+namespace App\NoticeBoardBundle\Entity;
 
 class NoticeBoard
 {

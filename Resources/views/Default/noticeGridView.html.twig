@@ -1,31 +1,28 @@
 {# Display Notices in grid arangement, 3 accross, and any number down #}
-
-
 <div class="grid col-md-12">
-{#{ dump(notice) }#}
     {% for row in notice |batch(3, 'No Item') %}
-    <div class="row">
-    {#{ dump(row) }#}
-        {% for column in row %}
-            {% if column  == "No Item"%}
-            {% else %}
-                <div class="col-md-4 cell">
-                    {% set title = column.title %}
-                    {% set requirements = column.requirements %}
-                    {% set id = column.id %}
-                    {% set image = column.image %}
-                    <a href="{{ path('showNotice', {'slug': id}) }}"><h5>{{ title }}</h5></a>
-                    {% if image == true %}
-                    {# <img src="/images/{{ id }}.jpg"> #}
-                    <a href="{{ path('showNotice', {'slug': id}) }}">
-                        <img class="recipe-image" width="150" height="150" style="max-width: 100%; height: auto;" src="{{ asset('recipe/images/' ~ image) }}"/>
-                    </a>
+        <div class="row">
+            {% for column in row %}
+                {% if column  == "No Item" %}
                 {% else %}
-                    {{ requirements|raw }}
+                    <div class="col-md-4 cell">
+                        {% set title = column.title %}
+                        {% set requirements = column.requirements %}
+                        {% set id = column.id %}
+                        {% set image = column.image %}
+                        <a href="{{ path('showNotice', {'slug': id}) }}"><h5>{{ title }}</h5></a>
+                        {% if image == true %}
+                            <a href="{{ path('showNotice', {'slug': id}) }}">
+                                <img class="recipe-image" width="150" height="150"
+                                     style="max-width: 100%; height: auto;"
+                                     src="{{ asset('recipe/images/' ~ image) }}"/>
+                            </a>
+                        {% else %}
+                            {{ requirements|raw }}
+                        {% endif %}
+                    </div>
                 {% endif %}
-                </div>
-             {% endif %}
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
     {% endfor %}
 </div>
