@@ -29,10 +29,17 @@ return [
     NoticeBoardBundle\NoticeBoardBundle::class => ['all' => true],
 ];
     ...
+config/packages/twig.yaml
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    paths:
+        '%kernel.project_dir%/src/NoticeBoardBundle/Resources/views': 'NoticeBoardBundle'
+
  ```
  install composer requires:
  ```
- require symfony/twig-bundle
+    symfony require symfony/twig-bundle
+    symfony composer require symfony/orm-pack
     symfony composer require symfony/asset
     symfony local:check:requirements
     symfony local:check:requirements
