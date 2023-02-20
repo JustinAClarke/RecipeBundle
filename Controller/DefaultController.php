@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use JustinFuhrmeisterClarke\AnalyticsBundle\Controller\AnalyticsIncludes;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Persistence\ManagerRegistry;
@@ -554,6 +555,62 @@ class DefaultController extends AbstractController
     public function deleteNotice($slug)
     {
         return "test";
+    }
+
+    /**
+     * API Methods
+     */
+    
+    /**
+     * Api method returning json payload containing the list of all Categories / Notice Boards
+     * 
+     * @api GET /api/categories
+     */
+     public function apiGetCategories()
+    {
+        $Boardrepository = $this->doctrine->getRepository(NoticeBoards::class);
+        $boards          = $Boardrepository->findAll();
+        $response = new JsonResponse(['boards' => $boards]);
+        return $response;
+    }
+
+
+    /**
+     * Api method returning json payload containing the list of all Categories / Notice Boards
+     * 
+     * @api POST /api/categories
+     */
+    public function apiCreateCategories()
+    {
+        $request = Request::createFromGlobals();
+        $response = new JsonResponse();
+        $title = $request->toArray()['title'] ?? null;
+
+        // if no title has been set error kindly
+
+        if (null === $title) {
+            $response->setStatusCode(400);
+            $response->setData(['error', "No {title} set."]);
+            return $response;
+        }
+        $em = $this->doctrine->getManager();
+		$NoticeBoards = new NoticeBoards();
+		$NoticeBoards->setTitle($title);
+		$em->persist($NoticeBoards); //commit to temp variable
+		$em->flush(); //Commit to Database
+		$em->clear();
+		if($em->getId() != "")
+        	{
+                $response->setStatusCode(201);
+                $response->setData(['boards' => $boards]);
+            }
+    	else
+    		{
+                $response->setStatusCode(400);
+                $response->setData(['error' => "Unable to save..."]);
+            }
+        
+        $response->send();     
     }
 
 }

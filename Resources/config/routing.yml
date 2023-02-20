@@ -53,3 +53,14 @@ categoriesnav:
 create_db:
     path:     /createdb
     controller: App\NoticeBoardBundle\Controller\DefaultController::create
+
+# Build the API
+apiGetCategories:
+    path:   /api/categories
+    controller: App\NoticeBoardBundle\Controller\DefaultController::apiGetCategories
+    methods:    GET
+
+apiCreateCategories:
+    path:   /api/categories
+    controller: App\NoticeBoardBundle\Controller\DefaultController::apiCreateCategories
+    methods:    POST
