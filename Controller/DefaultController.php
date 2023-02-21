@@ -16,18 +16,26 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use JustinFuhrmeisterClarke\AnalyticsBundle\Controller\AnalyticsIncludes;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+
+
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Persistence\ManagerRegistry;
 
 class DefaultController extends AbstractController
 {
-    private ManagerRegistry $doctrine;
+    private Serializer $serializer;
 
-    public function __construct(ManagerRegistry $doctrine)
+    public function __construct(private ManagerRegistry $doctrine)
     {
-        $this->doctrine = $doctrine;
-    }
+        $encoders = [new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        
+        $this->serializer = new Serializer($normalizers, $encoders);
+            }
     public function index()
     {
         // $log = new AnalyticsIncludes();
@@ -570,8 +578,7 @@ class DefaultController extends AbstractController
     {
         $Boardrepository = $this->doctrine->getRepository(NoticeBoards::class);
         $boards          = $Boardrepository->findAll();
-        $response = new JsonResponse(['boards' => $boards]);
-        return $response;
+        return JsonResponse::fromJsonString($this->serializer->serialize($boards, 'json'));
     }
 
 
@@ -584,6 +591,9 @@ class DefaultController extends AbstractController
     {
         $request = Request::createFromGlobals();
         $response = new JsonResponse();
+        $content = $request->getContent();
+// var_dump($content);
+// die();
         $title = $request->toArray()['title'] ?? null;
 
         // if no title has been set error kindly
@@ -599,10 +609,10 @@ class DefaultController extends AbstractController
 		$em->persist($NoticeBoards); //commit to temp variable
 		$em->flush(); //Commit to Database
 		$em->clear();
-		if($em->getId() != "")
+		if($NoticeBoards->getId() != "")
         	{
                 $response->setStatusCode(201);
-                $response->setData(['boards' => $boards]);
+                $response->setJson($this->serializer->serialize($NoticeBoards, 'json'));
             }
     	else
     		{
@@ -610,7 +620,7 @@ class DefaultController extends AbstractController
                 $response->setData(['error' => "Unable to save..."]);
             }
         
-        $response->send();     
+        return $response;     
     }
 
 }
