@@ -638,7 +638,7 @@ class DefaultController extends AbstractController
             
         }
         $RecipesRepo = $this->doctrine->getRepository(NoticeBoardNotices::class);
-        $recipes          = $RecipesRepo->findBy(array('board' => $category), array('title' => 'ASC'));
+        $recipes          = $RecipesRepo->findByBoard($category);
         $response->setJson($this->serializer->serialize($recipes, 'json'));
         return $response;
     }
