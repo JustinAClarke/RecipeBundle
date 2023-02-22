@@ -572,9 +572,9 @@ class DefaultController extends AbstractController
     /**
      * Api method returning json payload containing the list of all Categories / Notice Boards
      * 
-     * @api GET /api/categories
+     * @api GET /api/category/list
      */
-     public function apiGetCategories()
+     public function apiGetCategoryList()
     {
         $Boardrepository = $this->doctrine->getRepository(NoticeBoards::class);
         $boards          = $Boardrepository->findAll();
@@ -585,15 +585,14 @@ class DefaultController extends AbstractController
     /**
      * Api method returning json payload containing the list of all Categories / Notice Boards
      * 
-     * @api POST /api/categories
+     * @api POST /api/category
      */
-    public function apiCreateCategories()
+    public function apiCreateCategory()
     {
         $request = Request::createFromGlobals();
         $response = new JsonResponse();
         $content = $request->getContent();
-// var_dump($content);
-// die();
+
         $title = $request->toArray()['title'] ?? null;
 
         // if no title has been set error kindly
@@ -621,6 +620,27 @@ class DefaultController extends AbstractController
             }
         
         return $response;     
+    }
+
+    /**
+     * Api method returning json payload containing the list of all Recipes for a specific Category
+     * 
+     * @api GET /api/category/{category:\s+}
+     */
+    public function apiGetCategory($category)
+    {
+        $response = new JsonResponse();
+
+        // sanity check the route request
+        if ('' === (string)$category) {
+            $response->setStatusCode(400);
+            $response->setData(['error', "Invalid Category Id"]);
+            
+        }
+        $RecipesRepo = $this->doctrine->getRepository(NoticeBoardNotices::class);
+        $recipes          = $RecipesRepo->findBy(array('board' => $category), array('title' => 'ASC'));
+        $response->setJson($this->serializer->serialize($recipes, 'json'));
+        return $response;
     }
 
 }

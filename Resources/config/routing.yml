@@ -55,12 +55,20 @@ create_db:
     controller: App\NoticeBoardBundle\Controller\DefaultController::create
 
 # Build the API
-apiGetCategories:
-    path:   /api/categories
-    controller: App\NoticeBoardBundle\Controller\DefaultController::apiGetCategories
+apiGetCategoryList:
+    path:   /api/category/list
+    controller: App\NoticeBoardBundle\Controller\DefaultController::apiGetCategoryList
     methods:    GET
 
-apiCreateCategories:
-    path:   /api/categories
-    controller: App\NoticeBoardBundle\Controller\DefaultController::apiCreateCategories
+apiCreateCategory:
+    path:   /api/category
+    controller: App\NoticeBoardBundle\Controller\DefaultController::apiCreateCategory
     methods:    POST
+
+apiGetCategory:
+    path:   /api/category/{category}
+    controller: App\NoticeBoardBundle\Controller\DefaultController::apiGetCategory
+    methods:    GET
+    # requirements:
+    #     category: '\s+'
+
