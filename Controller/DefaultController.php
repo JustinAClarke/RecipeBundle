@@ -778,4 +778,45 @@ class DefaultController extends AbstractController
         $response->setJson($this->serializer->serialize($recipe, 'json'));
         return $response;
     }
+
+    /**
+     * Api method to create a recipe
+     *
+     * @api POST /api/recipe
+     */
+    public function apiCreateRecipe()
+    {
+        $response = new JsonResponse();
+        $request = Request::createFromGlobals();
+
+        $post = $request->toArray();
+        $requiredFields = ['title', 'board'];
+        if (array_diff($requiredFields, $post)) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "Missing required fields", 'Required Fields' => $requiredFields]);
+            return $response;
+        }
+
+        ### TODO: now create the recipe...
+        // if no title has been set error kindly
+
+        if (null === $title) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "No {title} set."]);
+            return $response;
+        }
+
+
+        $RecipesRepo = $this->doctrine->getRepository(NoticeBoardNotices::class);
+        $recipe          = $RecipesRepo->findOneById($id);
+
+        if (null === $recipe) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "No Recipe Found"]);
+            return $response;
+        }
+
+        $response->setJson($this->serializer->serialize($recipe, 'json'));
+        return $response;
+    }
 }

@@ -88,3 +88,10 @@ apiGetRecipe:
     methods: GET
     requirements:
         id: '\d+'
+
+apiCreateRecipe:
+    path: /api/recipe
+    controller: App\NoticeBoardBundle\Controller\DefaultController::apiCreateRecipe
+    methods: POST
+    requirements:
+        id: '\d+'
