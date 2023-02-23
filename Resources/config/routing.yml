@@ -85,5 +85,6 @@ apiUpdateCategory:
 apiGetRecipe:
     path: /api/recipe/{id}
     controller: App\NoticeBoardBundle\Controller\DefaultController::apiGetRecipe
+    methods: GET
     requirements:
         id: '\d+'
