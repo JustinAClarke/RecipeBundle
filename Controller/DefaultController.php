@@ -613,22 +613,7 @@ class DefaultController extends AbstractController
         }
 
 		$NoticeBoards = new NoticeBoards();
-		$NoticeBoards->setTitle($title);
-		$em->persist($NoticeBoards); //commit to temp variable
-		$em->flush(); //Commit to Database
-		$em->clear();
-		if($NoticeBoards->getId() != "")
-        	{
-                $response->setStatusCode(201);
-                $response->setJson($this->serializer->serialize($NoticeBoards, 'json'));
-            }
-    	else
-    		{
-                $response->setStatusCode(400);
-                $response->setData(['error' => "Unable to save..."]);
-            }
-        
-        return $response;     
+        return $this->updateCat($NoticeBoards, $title, $em, $response);
     }
 
     /**
@@ -699,6 +684,70 @@ class DefaultController extends AbstractController
         return $response;
     }
 
+    /**
+     * Api method to update a category title
+     *
+     * @api PUT|PATCH /api/category/{category:\s+}
+     */
+    public function apiUpdateCategory($category)
+    {
+        $response = new JsonResponse();
+        $request = Request::createFromGlobals();
 
+        if ('' === (string)$category) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "Invalid Category Id"]);
 
+        }
+
+        $title = $request->toArray()['title'] ?? null;
+
+        // if no title has been set error kindly
+
+        if (null === $title) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "No {title} set."]);
+            return $response;
+        }
+        $em = $this->doctrine->getManager();
+        $Boardrepository = $this->doctrine->getRepository(NoticeBoards::class);
+
+        // Does the board actually exist?
+        $categoryObj = $Boardrepository->findOneBy(['title' => $category]);
+        if (!$categoryObj) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => sprintf("Category '%s' does not exist.", $title)]);
+            return $response;
+        }
+
+        return $this->updateCat($categoryObj, $title, $em, $response);
+
+    }
+
+    /**
+     * common function to update a category
+     *
+     * @param object $categoryObj
+     * @param mixed $title
+     * @param \Doctrine\Persistence\ObjectManager $em
+     * @param JsonResponse $response
+     * @return JsonResponse
+     */
+    private function updateCat(object $categoryObj, mixed $title, \Doctrine\Persistence\ObjectManager $em, JsonResponse $response): JsonResponse
+    {
+        $categoryObj->setTitle($title);
+
+        $em->persist($categoryObj); //commit to temp variable
+        $em->flush(); //Commit to Database
+        $em->clear();
+        if ($categoryObj->getId() != "") {
+            $response->setStatusCode(201);
+            $response->setJson($this->serializer->serialize($categoryObj, 'json'));
+        } else {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "Unable to save..."]);
+        }
+
+        return $response;
+    }
 }

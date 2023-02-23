@@ -76,3 +76,8 @@ apiDeleteCategory:
     path:   /api/category/{category}
     controller: App\NoticeBoardBundle\Controller\DefaultController::apiDeleteCategory
     methods:    DELETE
+
+apiUpdateCategory:
+    path:   /api/category/{category}
+    controller: App\NoticeBoardBundle\Controller\DefaultController::apiUpdateCategory
+    methods:    PUT|PATCH
