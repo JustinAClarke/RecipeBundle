@@ -81,3 +81,9 @@ apiUpdateCategory:
     path:   /api/category/{category}
     controller: App\NoticeBoardBundle\Controller\DefaultController::apiUpdateCategory
     methods:    PUT|PATCH
+
+apiGetRecipe:
+    path: /api/recipe/{id}
+    controller: App\NoticeBoardBundle\Controller\DefaultController::apiGetRecipe
+    requirements:
+        id: '\d+'

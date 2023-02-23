@@ -750,4 +750,32 @@ class DefaultController extends AbstractController
 
         return $response;
     }
+
+    /**
+     * Api method to get a recipe
+     *
+     * @api GET /api/recipe/{id:\d+}
+     */
+    public function apiGetRecipe($id)
+    {
+        $response = new JsonResponse();
+        $request = Request::createFromGlobals();
+
+        if (0 === $id) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "Invalid Recipe Id"]);
+        }
+
+        $RecipesRepo = $this->doctrine->getRepository(NoticeBoardNotices::class);
+        $recipe          = $RecipesRepo->findOneById($id);
+
+        if (null === $recipe) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "No Recipe Found"]);
+            return $response;
+        }
+
+        $response->setJson($this->serializer->serialize($recipe, 'json'));
+        return $response;
+    }
 }
