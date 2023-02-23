@@ -603,6 +603,15 @@ class DefaultController extends AbstractController
             return $response;
         }
         $em = $this->doctrine->getManager();
+        $Boardrepository = $this->doctrine->getRepository(NoticeBoards::class);
+
+        // Does the board already exist?
+        if ($Boardrepository->findOneBy(['title' => $title])) {
+            $response->setStatusCode(400);
+            $response->setData(['error', sprintf("Category '%s' already exists.", $title)]);
+            return $response;
+        }
+
 		$NoticeBoards = new NoticeBoards();
 		$NoticeBoards->setTitle($title);
 		$em->persist($NoticeBoards); //commit to temp variable
