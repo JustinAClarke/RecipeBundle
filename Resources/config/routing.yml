@@ -72,3 +72,7 @@ apiGetCategory:
     # requirements:
     #     category: '\s+'
 
+apiDeleteCategory:
+    path:   /api/category/{category}
+    controller: App\NoticeBoardBundle\Controller\DefaultController::apiDeleteCategory
+    methods:    DELETE

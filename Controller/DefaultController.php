@@ -599,7 +599,7 @@ class DefaultController extends AbstractController
 
         if (null === $title) {
             $response->setStatusCode(400);
-            $response->setData(['error', "No {title} set."]);
+            $response->setData(['error' => "No {title} set."]);
             return $response;
         }
         $em = $this->doctrine->getManager();
@@ -608,7 +608,7 @@ class DefaultController extends AbstractController
         // Does the board already exist?
         if ($Boardrepository->findOneBy(['title' => $title])) {
             $response->setStatusCode(400);
-            $response->setData(['error', sprintf("Category '%s' already exists.", $title)]);
+            $response->setData(['error' => sprintf("Category '%s' already exists.", $title)]);
             return $response;
         }
 
@@ -643,7 +643,7 @@ class DefaultController extends AbstractController
         // sanity check the route request
         if ('' === (string)$category) {
             $response->setStatusCode(400);
-            $response->setData(['error', "Invalid Category Id"]);
+            $response->setData(['error' => "Invalid Category Id"]);
             
         }
         $RecipesRepo = $this->doctrine->getRepository(NoticeBoardNotices::class);
@@ -651,5 +651,48 @@ class DefaultController extends AbstractController
         $response->setJson($this->serializer->serialize($recipes, 'json'));
         return $response;
     }
+
+    /**
+     * Api method to delete a category and all associated recipes
+     *
+     * @api DELETE /api/category/{category:\s+}
+     */
+    public function apiDeleteCategory($category)
+    {
+        $response = new JsonResponse();
+
+        if ('' === (string)$category) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "Invalid Category Id"]);
+
+        }
+
+        // Don't trust anything, build a transaction so if things break, we can back out of a corner
+        $em = $this->doctrine->getManager();
+        $em->getConnection()->beginTransaction(); // suspend auto-commit
+
+        try {
+            // Delete Recipes
+            $RecipesRepo = $this->doctrine->getRepository(NoticeBoardNotices::class);
+            $recipes          = $RecipesRepo->findByBoard($category);
+            $em->remove($recipes);
+
+            $categoriesRepo = $this->doctrine->getRepository(NoticeBoards::class);
+            $categoryObj          = $categoriesRepo->findByTitle($category);
+            $em->remove($categoryObj);
+
+            $em->flush();
+            $em->getConnection()->commit();
+            $response->setStatusCode(200);
+            $response->setData(['success', "Deleted Category and associated recipes"]);
+        } catch (\Exception $e) {
+            $em->getConnection()->rollBack();
+            $response->setStatusCode(400);
+            $response->setData(['error' => $e->getMessage(), 'exception' => $e]);
+        }
+        return $response;
+    }
+
+
 
 }
