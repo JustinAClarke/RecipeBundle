@@ -671,20 +671,26 @@ class DefaultController extends AbstractController
         $em = $this->doctrine->getManager();
         $em->getConnection()->beginTransaction(); // suspend auto-commit
 
+        $itemsDeleted = 0;
         try {
             // Delete Recipes
             $RecipesRepo = $this->doctrine->getRepository(NoticeBoardNotices::class);
             $recipes          = $RecipesRepo->findByBoard($category);
-            $em->remove($recipes);
+            foreach ($recipes as $recipe) {
+                $em->remove($recipe);
+                $itemsDeleted++;
+            }
+
 
             $categoriesRepo = $this->doctrine->getRepository(NoticeBoards::class);
-            $categoryObj          = $categoriesRepo->findByTitle($category);
+            $categoryObj          = $categoriesRepo->findOneByTitle($category);
             $em->remove($categoryObj);
+            $itemsDeleted++;
 
             $em->flush();
             $em->getConnection()->commit();
             $response->setStatusCode(200);
-            $response->setData(['success', "Deleted Category and associated recipes"]);
+            $response->setData(['success', sprintf("Deleted: %s items. Category and associated recipes", $itemsDeleted)]);
         } catch (\Exception $e) {
             $em->getConnection()->rollBack();
             $response->setStatusCode(400);
