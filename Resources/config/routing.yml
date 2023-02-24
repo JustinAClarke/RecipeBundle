@@ -53,3 +53,45 @@ categoriesnav:
 create_db:
     path:     /createdb
     controller: App\NoticeBoardBundle\Controller\DefaultController::create
+
+# Build the API
+apiGetCategoryList:
+    path:   /api/category/list
+    controller: App\NoticeBoardBundle\Controller\DefaultController::apiGetCategoryList
+    methods:    GET
+
+apiCreateCategory:
+    path:   /api/category
+    controller: App\NoticeBoardBundle\Controller\DefaultController::apiCreateCategory
+    methods:    POST
+
+apiGetCategory:
+    path:   /api/category/{category}
+    controller: App\NoticeBoardBundle\Controller\DefaultController::apiGetCategory
+    methods:    GET
+    # requirements:
+    #     category: '\s+'
+
+apiDeleteCategory:
+    path:   /api/category/{category}
+    controller: App\NoticeBoardBundle\Controller\DefaultController::apiDeleteCategory
+    methods:    DELETE
+
+apiUpdateCategory:
+    path:   /api/category/{category}
+    controller: App\NoticeBoardBundle\Controller\DefaultController::apiUpdateCategory
+    methods:    PUT|PATCH
+
+apiGetRecipe:
+    path: /api/recipe/{id}
+    controller: App\NoticeBoardBundle\Controller\DefaultController::apiGetRecipe
+    methods: GET
+    requirements:
+        id: '\d+'
+
+apiCreateRecipe:
+    path: /api/recipe
+    controller: App\NoticeBoardBundle\Controller\DefaultController::apiCreateRecipe
+    methods: POST
+    requirements:
+        id: '\d+'

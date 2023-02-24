@@ -15,18 +15,27 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use JustinFuhrmeisterClarke\AnalyticsBundle\Controller\AnalyticsIncludes;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+
+
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Persistence\ManagerRegistry;
 
 class DefaultController extends AbstractController
 {
-    private ManagerRegistry $doctrine;
+    private Serializer $serializer;
 
-    public function __construct(ManagerRegistry $doctrine)
+    public function __construct(private ManagerRegistry $doctrine)
     {
-        $this->doctrine = $doctrine;
-    }
+        $encoders = [new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        
+        $this->serializer = new Serializer($normalizers, $encoders);
+            }
     public function index()
     {
         // $log = new AnalyticsIncludes();
@@ -556,4 +565,258 @@ class DefaultController extends AbstractController
         return "test";
     }
 
+    /**
+     * API Methods
+     */
+    
+    /**
+     * Api method returning json payload containing the list of all Categories / Notice Boards
+     * 
+     * @api GET /api/category/list
+     */
+     public function apiGetCategoryList()
+    {
+        $Boardrepository = $this->doctrine->getRepository(NoticeBoards::class);
+        $boards          = $Boardrepository->findAll();
+        return JsonResponse::fromJsonString($this->serializer->serialize($boards, 'json'));
+    }
+
+
+    /**
+     * Api method returning json payload containing the list of all Categories / Notice Boards
+     * 
+     * @api POST /api/category
+     */
+    public function apiCreateCategory()
+    {
+        $request = Request::createFromGlobals();
+        $response = new JsonResponse();
+        $content = $request->getContent();
+
+        $title = $request->toArray()['title'] ?? null;
+
+        // if no title has been set error kindly
+
+        if (null === $title) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "No {title} set."]);
+            return $response;
+        }
+        $em = $this->doctrine->getManager();
+        $Boardrepository = $this->doctrine->getRepository(NoticeBoards::class);
+
+        // Does the board already exist?
+        if ($Boardrepository->findOneBy(['title' => $title])) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => sprintf("Category '%s' already exists.", $title)]);
+            return $response;
+        }
+
+		$NoticeBoards = new NoticeBoards();
+        return $this->updateCat($NoticeBoards, $title, $em, $response);
+    }
+
+    /**
+     * Api method returning json payload containing the list of all Recipes for a specific Category
+     * 
+     * @api GET /api/category/{category:\s+}
+     */
+    public function apiGetCategory($category)
+    {
+        $response = new JsonResponse();
+
+        // sanity check the route request
+        if ('' === (string)$category) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "Invalid Category Id"]);
+            
+        }
+        $RecipesRepo = $this->doctrine->getRepository(NoticeBoardNotices::class);
+        $recipes          = $RecipesRepo->findByBoard($category);
+        $response->setJson($this->serializer->serialize($recipes, 'json'));
+        return $response;
+    }
+
+    /**
+     * Api method to delete a category and all associated recipes
+     *
+     * @api DELETE /api/category/{category:\s+}
+     */
+    public function apiDeleteCategory($category)
+    {
+        $response = new JsonResponse();
+
+        if ('' === (string)$category) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "Invalid Category Id"]);
+
+        }
+
+        // Don't trust anything, build a transaction so if things break, we can back out of a corner
+        $em = $this->doctrine->getManager();
+        $em->getConnection()->beginTransaction(); // suspend auto-commit
+
+        $itemsDeleted = 0;
+        try {
+            // Delete Recipes
+            $RecipesRepo = $this->doctrine->getRepository(NoticeBoardNotices::class);
+            $recipes          = $RecipesRepo->findByBoard($category);
+            foreach ($recipes as $recipe) {
+                $em->remove($recipe);
+                $itemsDeleted++;
+            }
+
+
+            $categoriesRepo = $this->doctrine->getRepository(NoticeBoards::class);
+            $categoryObj          = $categoriesRepo->findOneByTitle($category);
+            $em->remove($categoryObj);
+            $itemsDeleted++;
+
+            $em->flush();
+            $em->getConnection()->commit();
+            $response->setStatusCode(200);
+            $response->setData(['success', sprintf("Deleted: %s items. Category and associated recipes", $itemsDeleted)]);
+        } catch (\Exception $e) {
+            $em->getConnection()->rollBack();
+            $response->setStatusCode(400);
+            $response->setData(['error' => $e->getMessage(), 'exception' => $e]);
+        }
+        return $response;
+    }
+
+    /**
+     * Api method to update a category title
+     *
+     * @api PUT|PATCH /api/category/{category:\s+}
+     */
+    public function apiUpdateCategory($category)
+    {
+        $response = new JsonResponse();
+        $request = Request::createFromGlobals();
+
+        if ('' === (string)$category) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "Invalid Category Id"]);
+
+        }
+
+        $title = $request->toArray()['title'] ?? null;
+
+        // if no title has been set error kindly
+
+        if (null === $title) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "No {title} set."]);
+            return $response;
+        }
+        $em = $this->doctrine->getManager();
+        $Boardrepository = $this->doctrine->getRepository(NoticeBoards::class);
+
+        // Does the board actually exist?
+        $categoryObj = $Boardrepository->findOneBy(['title' => $category]);
+        if (!$categoryObj) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => sprintf("Category '%s' does not exist.", $title)]);
+            return $response;
+        }
+
+        return $this->updateCat($categoryObj, $title, $em, $response);
+
+    }
+
+    /**
+     * common function to update a category
+     *
+     * @param object $categoryObj
+     * @param mixed $title
+     * @param \Doctrine\Persistence\ObjectManager $em
+     * @param JsonResponse $response
+     * @return JsonResponse
+     */
+    private function updateCat(object $categoryObj, mixed $title, \Doctrine\Persistence\ObjectManager $em, JsonResponse $response): JsonResponse
+    {
+        $categoryObj->setTitle($title);
+
+        $em->persist($categoryObj); //commit to temp variable
+        $em->flush(); //Commit to Database
+        $em->clear();
+        if ($categoryObj->getId() != "") {
+            $response->setStatusCode(201);
+            $response->setJson($this->serializer->serialize($categoryObj, 'json'));
+        } else {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "Unable to save..."]);
+        }
+
+        return $response;
+    }
+
+    /**
+     * Api method to get a recipe
+     *
+     * @api GET /api/recipe/{id:\d+}
+     */
+    public function apiGetRecipe($id)
+    {
+        $response = new JsonResponse();
+        $request = Request::createFromGlobals();
+
+        if (0 === $id) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "Invalid Recipe Id"]);
+        }
+
+        $RecipesRepo = $this->doctrine->getRepository(NoticeBoardNotices::class);
+        $recipe          = $RecipesRepo->findOneById($id);
+
+        if (null === $recipe) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "No Recipe Found"]);
+            return $response;
+        }
+
+        $response->setJson($this->serializer->serialize($recipe, 'json'));
+        return $response;
+    }
+
+    /**
+     * Api method to create a recipe
+     *
+     * @api POST /api/recipe
+     */
+    public function apiCreateRecipe()
+    {
+        $response = new JsonResponse();
+        $request = Request::createFromGlobals();
+
+        $post = $request->toArray();
+        $requiredFields = ['title', 'board'];
+        if (array_diff($requiredFields, $post)) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "Missing required fields", 'Required Fields' => $requiredFields]);
+            return $response;
+        }
+
+        ### TODO: now create the recipe...
+        // if no title has been set error kindly
+
+        if (null === $title) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "No {title} set."]);
+            return $response;
+        }
+
+
+        $RecipesRepo = $this->doctrine->getRepository(NoticeBoardNotices::class);
+        $recipe          = $RecipesRepo->findOneById($id);
+
+        if (null === $recipe) {
+            $response->setStatusCode(400);
+            $response->setData(['error' => "No Recipe Found"]);
+            return $response;
+        }
+
+        $response->setJson($this->serializer->serialize($recipe, 'json'));
+        return $response;
+    }
 }
