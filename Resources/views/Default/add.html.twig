@@ -70,7 +70,23 @@
     <script>
 
         ClassicEditor
-            .create(document.querySelector('textarea'))
+            .create(document.querySelector('#form_requirements'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#form_content'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#form_notes'))
             .then(editor => {
                 console.log(editor);
             })
@@ -85,6 +101,10 @@
 
         textarea {
             required: false;
+            color: black;
+        }
+        .ck-content {
+            color: black;
         }
     </style>
 
