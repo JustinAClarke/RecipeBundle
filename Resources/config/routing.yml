@@ -20,11 +20,11 @@ showNotice:
 
 showNoticeSidebySideSingle:
     path:     /showSidebySide/{slug1}
-    controller: App\NoticeBoardBundle\Controller\DefaultController::showSidebySideSingle
+    controller: App\NoticeBoardBundle\Controller\DefaultController::showSidebySideSingleAction
     
 showNoticeSidebySide:
     path:     /showSidebySide/{slug1}/{slug2}
-    controller: App\NoticeBoardBundle\Controller\DefaultController::showSidebySide
+    controller: App\NoticeBoardBundle\Controller\DefaultController::showSidebySideAction
     
 editNotice:
     path:     /editRecipe/{slug}
