@@ -416,6 +416,11 @@ class DefaultController extends AbstractController
                 # code...
                 array_push($searchArray, 'p.notes like :query' );
             }
+
+            // if searchArray is empty, then search all fields
+            if (empty($searchArray)) {
+                $searchArray = array('p.title like :query', 'p.requirements like :query', 'p.content like :query', 'p.notes like :query');
+            }
             $searchQuery = implode(" or ", $searchArray);
             // echo "<br>";
             // echo $searchQuery;

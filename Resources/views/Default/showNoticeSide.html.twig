@@ -31,7 +31,7 @@
             </div>
 
             {{ render(controller(
-                'NoticeBoardBundle:Default:showNoticeCommon',
+                'App\\NoticeBoardBundle\\Controller\\DefaultController::showNoticeCommonAction',
                 { 'slug' : view1 ,
                     'showtitle':true,
                     'showimage':false}
@@ -53,7 +53,7 @@
             {% if view2 == false %}
             {% else %}
                 {{ render(controller(
-                    'NoticeBoardBundle:Default:showNoticeCommon',
+                    'App\\NoticeBoardBundle\\Controller\\DefaultController::showNoticeCommonAction',
                     { 'slug' : view2 ,
                         'showtitle':true,
                         'showimage':false}
